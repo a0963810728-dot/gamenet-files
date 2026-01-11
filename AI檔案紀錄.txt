@@ -1,0 +1,18 @@
+保存「AI 記憶快照」
+如果您下次想要找我（或任何 AI）繼續修改這個專案，請複製並保存以下這段「專案摘要」。下次對話開始時直接貼給 AI，它就能秒速進入狀況：
+專案摘要 (Project Snapshot):
+名稱：星辰之影：永恆覺醒 (Shadow of Stars) 官方網站
+技術棧：React 19, Vite 6, Tailwind CSS, TypeScript, Lucide React
+核心功能：
+首頁 (Hero)：動態標題與下載引導。
+公告系統：動態讀取 siteConfig.ts 的活動訊息。
+裝備/武器庫：支援頁籤切換的展示系統。
+AI 助手 (露娜)：整合 Google Gemini 2.5 Flash API 的即時諮詢視窗。
+配置中心：所有遊戲內容（文字、圖片 URL、贊助方案）均統一在 siteConfig.ts 管理。
+
+
+4. 關於後續使用的建議
+更換圖片：如果您想換成真正的遊戲截圖，只需修改 Hero.tsx 或 App.tsx 中的 img src 網址。
+更新活動：未來有新活動，只要打開 siteConfig.ts 在 news 陣列裡增加一行即可，Vercel 會自動更新網頁。
+API Key 守護：請確保 Vercel 的 Environment Variables 中有設定 API_KEY，否則 AI 助手「露娜」會無法說話。
+您目前的網站已經非常精美且體質強健。 若未來需要增加「註冊功能」、「贊助金流連結」或「論壇系統」，隨時回來找我，我們再繼續擴張這個星辰帝國！
