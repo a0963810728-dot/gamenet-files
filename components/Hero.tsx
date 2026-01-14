@@ -4,15 +4,21 @@ import { siteConfig } from '../siteConfig';
 const Hero: React.FC = () => {
   return (
     <section id="download" className="relative h-[85vh] flex items-center justify-center pt-24 overflow-hidden bg-black">
-      {/* Background Layer */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black z-10"></div>
-        <img 
-          src="https://picsum.photos/1920/1080?random=fantasy_dark" 
-          className="w-full h-full object-cover opacity-40"
-          alt="Game World"
-        />
-      </div>
+     {/* Background Layer */}
+<div className="absolute inset-0 z-0">
+  {/* 黑 → 金色 → 黑 的天堂感光暈 */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-[#3a2a10]/40 to-black z-10"></div>
+
+  {/* 金色光感疊層 */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,130,0.25),transparent_60%)] z-10"></div>
+
+  <img 
+      src="/hero-bg.jpg"
+  className="w-full h-full object-cover opacity-55 scale-105"
+  alt="Game World"
+/>
+</div>
+
 
       <div className="max-w-7xl mx-auto px-6 relative z-20 w-full text-center">
         <div className="animate-float">
