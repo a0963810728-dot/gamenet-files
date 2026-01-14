@@ -12,11 +12,19 @@ const Hero: React.FC = () => {
   {/* 金色光感疊層 */}
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,130,0.25),transparent_60%)] z-10"></div>
 
+  <section className="relative h-[85vh] overflow-hidden">
   <img
-  src="/hero-bg-v1.png"
-  className="absolute inset-0 w-full h-full object-cover object-[center_65%] opacity-85 scale-110"
-  alt="Game World"
-/>
+    src="/hero-bg-v1.png"
+    className="absolute inset-0 w-full h-full object-cover object-[50%_65%] opacity-70"
+    alt="Game World"
+  />
+
+  <div className="relative z-10 flex flex-col items-center pt-36 text-center">
+    {/* 你的文字 / 按鈕 */}
+  </div>
+</section>
+
+
 
 
 </div>
