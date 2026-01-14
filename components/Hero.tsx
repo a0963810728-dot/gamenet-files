@@ -16,11 +16,17 @@ const Hero: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 relative z-20 w-full text-center">
         <div className="animate-float">
-          <h2 className="gold-text text-xl sm:text-2xl font-bold tracking-[0.4em] mb-4 uppercase">經典重現，全新啟程</h2>
-          <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter text-white leading-tight">
-            {siteConfig.gameName.split('：')[0]} <br/> <span className="gold-text">{siteConfig.gameName.split('：')[1]}</span>
-          </h1>
-        </div>
+  {/* 副標 */}
+  <h2 className="gold-text text-sm sm:text-base md:text-lg font-bold tracking-[0.35em] mb-3 uppercase opacity-90">
+    懷舊經典
+  </h2>
+
+  {/* 主標 */}
+  <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-8 tracking-tight text-white leading-tight">
+    大道M天堂
+  </h1>
+</div>
+
         
         <p className="max-w-xl mx-auto text-slate-400 text-base sm:text-lg mb-10 leading-relaxed font-light">
           唯有真正的英雄，能在黑暗中看見星光。<br />
