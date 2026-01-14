@@ -1,5 +1,5 @@
 export const siteConfig = {
-  gameName: "星辰之影：永恆覺醒",
+  gameName: "大道M天堂｜懷舊經典・熱血重現",
   version: "v2.5.4",
   updateDate: "2025/02/25",
   fileSize: "4.8 GB",
@@ -34,7 +34,7 @@ export const siteConfig = {
     icon: '⚖️'
   }
 ],
-,
+
 
   gears: [
     { name: '聖域騎士鎧甲', level: '+15', quality: '史詩級', desc: '來自遠古星辰的祝福，穿戴後大幅增加物理防禦力。' },
