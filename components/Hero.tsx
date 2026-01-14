@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
 
   <section className="relative h-[85vh] overflow-hidden">
   <img
-    src="/hero-bg-v1.png"
+    src="/hero-bg-v2.png"
     className="absolute inset-0 w-full h-full object-cover object-[50%_65%] opacity-70"
     alt="Game World"
   />
