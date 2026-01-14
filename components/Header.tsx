@@ -40,7 +40,7 @@ const Header: React.FC = () => {
                 大道M天堂
               </span>
               <span className="text-[10px] text-white tracking-[0.2em] font-bold opacity-80">
-                懷舊經典・熱血重現
+                懷舊經典
               </span>
             </div>
           </div>
