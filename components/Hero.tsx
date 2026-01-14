@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,130,0.25),transparent_60%)] z-10"></div>
 
   <img 
-      src="/hero-bg-v1.jpg"
+      src="/hero-bg-v1.png"
   className="w-full h-full object-cover opacity-55 scale-105"
   alt="Game World"
 />
