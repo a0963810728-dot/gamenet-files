@@ -36,13 +36,16 @@ const Header: React.FC = () => {
               </svg>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black tracking-widest gold-text italic">
-                大道M天堂
-              </span>
-              <span className="text-[10px] text-white tracking-[0.2em] font-bold opacity-80">
-                懷舊經典
-              </span>
-            </div>
+  <span className="text-3xl md:text-4xl font-black tracking-widest gold-text">
+  大道M天堂
+</span>
+
+<span className="mt-2 text-xs md:text-sm text-white tracking-[0.35em] opacity-60">
+  懷舊經典
+</span>
+
+</div>
+
           </div>
 
           <button className="gold-btn px-6 py-2 rounded font-bold">
