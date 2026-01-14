@@ -24,10 +24,14 @@ const Header: React.FC = () => {
               <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black tracking-widest gold-text italic">星辰之影</span>
-              <span className="text-[10px] text-white tracking-[0.2em] font-bold opacity-80">SHADOW OF STARS</span>
-            </div>
-          </div>
+  <span className="text-xl font-black tracking-widest gold-text italic">
+    大道M天堂
+  </span>
+  <span className="text-[10px] text-white tracking-[0.2em] font-bold opacity-80">
+    懷舊經典・熱血重現
+  </span>
+</div>
+
           
           <nav className="hidden xl:flex space-x-8 text-sm font-bold tracking-widest">
             <a href="#news" className="text-white hover:text-[#fccd4d] transition-colors">活動公告</a>
