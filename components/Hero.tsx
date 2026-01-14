@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
 
   {/* Hero 標題 Logo */}
 <img
-  src="/hero-title.png"
+  src="/hero-title-v2.png"
   alt="大道 M 天堂"
   className="
   block mx-auto
