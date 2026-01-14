@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,130,0.25),transparent_60%)] z-10"></div>
 
   <img 
-      src="/hero-bg.jpg"
+      src="/hero-bg-v1.jpg"
   className="w-full h-full object-cover opacity-55 scale-105"
   alt="Game World"
 />
@@ -26,20 +26,7 @@ const Hero: React.FC = () => {
   <h2 className="gold-text text-sm sm:text-base md:text-lg font-bold tracking-[0.35em] mb-3 uppercase opacity-90">
     懷舊經典
   </h2>
-
-  {/* Hero 標題 Logo */}
-<img
-  src="/hero-title-v3.png"
-  alt="大道 M 天堂"
-  className="
-    block mx-auto
-    w-[320px]
-    md:w-[540px]
-    -translate-y-4
-    drop-shadow-[0_0_20px_rgba(255,200,90,0.28)]
-  "
-/>
-
+ 
 </div>
 
         
