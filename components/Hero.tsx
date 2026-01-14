@@ -12,15 +12,16 @@ const Hero: React.FC = () => {
   {/* 金色光感疊層 */}
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,130,0.25),transparent_60%)] z-10"></div>
 
-  <img 
-      src="/hero-bg-v1.png"
-  className="w-full h-full object-cover opacity-55 scale-105"
+  <img
+  src="/hero-bg-v1.png"
+  className="absolute inset-0 w-full h-full object-cover opacity-80 scale-110"
   alt="Game World"
 />
+
 </div>
 
 
-      <div className="max-w-7xl mx-auto px-6 relative z-20 w-full text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center h-full pt-28 md:pt-36">
         <div className="animate-float">
   {/* 副標 */}
   <h2 className="gold-text text-sm sm:text-base md:text-lg font-bold tracking-[0.35em] mb-3 uppercase opacity-90">
