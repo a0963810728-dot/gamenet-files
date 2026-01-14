@@ -27,10 +27,18 @@ const Hero: React.FC = () => {
     懷舊經典
   </h2>
 
-  {/* 主標 */}
-  <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-8 tracking-tight text-white leading-tight">
-    大道M天堂
-  </h1>
+  {/* Hero 標題 Logo */}
+<img
+  src="/hero-title.png"
+  alt="大道 M 天堂"
+  className="
+    block mx-auto
+    w-[320px]
+    md:w-[540px]
+    drop-shadow-[0_0_20px_rgba(255,200,90,0.28)]
+  "
+/>
+
 </div>
 
         
