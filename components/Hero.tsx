@@ -15,12 +15,12 @@ const Hero: React.FC = () => {
   <section className="relative h-[85vh] overflow-hidden">
   <img
     src="/hero-bg-v2.png"
-    className="absolute inset-0 w-full h-full object-cover object-[50%_65%] opacity-70"
+    className="absolute inset-0 w-full h-full object-cover opacity-70 translate-y-24"
     alt="Game World"
   />
 
-  <div className="relative z-10 flex flex-col items-center pt-36 text-center">
-    {/* 你的文字 / 按鈕 */}
+  <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
+    {/* 文字不動 */}
   </div>
 </section>
 
