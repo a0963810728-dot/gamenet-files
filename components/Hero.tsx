@@ -14,9 +14,10 @@ const Hero: React.FC = () => {
 
   <img
   src="/hero-bg-v1.png"
-  className="absolute inset-0 w-full h-full object-cover opacity-80 scale-110"
+  className="absolute inset-0 w-full h-full object-cover object-[center_65%] opacity-85 scale-110"
   alt="Game World"
 />
+
 
 </div>
 
