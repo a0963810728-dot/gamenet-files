@@ -32,13 +32,12 @@ const Hero: React.FC = () => {
   src="/hero-title-v2.png"
   alt="大道 M 天堂"
   className="
-  block mx-auto
-  w-[320px]
-  md:w-[540px]
-  -translate-y-4
-  drop-shadow-[0_0_20px_rgba(255,200,90,0.28)]
-"
-
+    block mx-auto
+    w-[320px]
+    md:w-[540px]
+    -translate-y-4
+    drop-shadow-[0_0_20px_rgba(255,200,90,0.28)]
+  "
 />
 
 </div>
