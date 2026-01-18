@@ -1,4 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { 
+  BookOpen, // 新手入門
+  Swords,   // 職業介紹
+  Map,      // 地圖資訊
+  Search,   // 掉落查詢
+  ExternalLink,
+  ChevronRight,
+  Image as ImageIcon 
+} from 'lucide-react';
 
 // 定義職業卡片元件
 const ClassCard: React.FC<{ job: any }> = ({ job }) => (
@@ -8,16 +17,18 @@ const ClassCard: React.FC<{ job: any }> = ({ job }) => (
     <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl group-hover:bg-purple-600/20 transition-all pointer-events-none"></div>
 
     {/* 職業圖片 */}
-    {/* 🔥🔥🔥 修改重點：再次加大圖標尺寸 🔥🔥🔥 */}
     <div className="flex justify-center mb-6 relative z-10">
       <img 
         src={job.image} 
         alt={job.name} 
-        // 將 w-32 h-32 改為 w-40 h-40 (160px)，尺寸更大
+        // 圖片載入失敗時的處理
+        onError={(e) => {
+          e.currentTarget.style.display = 'none';
+          e.currentTarget.parentElement!.innerHTML = '<div class="w-40 h-40 flex items-center justify-center bg-white/5 rounded-full text-slate-600 text-xs border border-white/10">暫無圖片</div>';
+        }}
         className="w-40 h-40 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.6)] group-hover:scale-110 transition-transform duration-500"
       />
     </div>
-    {/* 🔥🔥🔥 修改結束 🔥🔥🔥 */}
 
     {/* 標題與描述 */}
     <div className="text-center relative z-10">
@@ -47,17 +58,23 @@ const ClassCard: React.FC<{ job: any }> = ({ job }) => (
 const GameGuide: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('新手入門'); 
 
+  // 🔥🔥🔥 新增：頁面載入時自動置頂 🔥🔥🔥
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // 外部查詢網址
   const DROP_SEARCH_URL = "https://cartest-ih32.onrender.com"; 
 
+  // 🔥 改用 Lucide 圖標，更有質感
   const categories = [
-    { name: '新手入門', icon: '🔰' },
-    { name: '職業介紹', icon: '⚔️' },
-    { name: '地圖資訊', icon: '🗺️' },
-    { name: '掉落查詢', icon: '🔍' }, 
+    { name: '新手入門', icon: BookOpen },
+    { name: '職業介紹', icon: Swords },
+    { name: '地圖資訊', icon: Map },
+    { name: '掉落查詢', icon: Search }, 
   ];
 
-  // === 🔰 新手教學資料 (保持不變) ===
+  // === 🔰 新手教學資料 ===
   const guideSteps = [
     {
       step: '01',
@@ -157,7 +174,7 @@ const GameGuide: React.FC = () => {
     }
   ];
 
-  // === ⚔️ 職業資料 (保持不變) ===
+  // === ⚔️ 職業資料 ===
   const classes = [
     { name: '王族', title: '血盟君主', desc: '唯一能創建血盟的職業，擁有凝聚眾人的領袖魅力。雖然戰鬥力平平，但能透過光環技能強化全隊素質，是攻城戰的核心指揮官。', stats: { str: '★★★', int: '★★', con: '★★★★' }, image: '/Class_Change_Prince.png' },
     { name: '騎士', title: '戰場先鋒', desc: '擁有極高的防禦力與各種減傷技能，是戰場上最堅實的肉盾。擅長使用雙手劍進行「衝擊之暈」控制敵人，是 PVP 前線的絕對主力。', stats: { str: '★★★★', int: '★', con: '★★★★★' }, image: '/Class_Change_Knight.png' },
@@ -172,7 +189,7 @@ const GameGuide: React.FC = () => {
     <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* 標題區 (保持不變) */}
+        {/* 標題區 */}
         <div className="mb-10 border-b border-white/10 pb-6">
           <h1 className="text-2xl md:text-3xl font-black text-white tracking-widest">
             <span className="text-[#fccd4d]">GAME GUIDE</span> 遊戲攻略
@@ -182,7 +199,7 @@ const GameGuide: React.FC = () => {
 
         <div className="flex flex-col md:flex-row gap-8">
           
-          {/* 左側選單 (保持不變) */}
+          {/* 左側選單 */}
           <aside className="w-full md:w-64 flex-shrink-0">
             <div className="bg-white/5 rounded-lg p-4 border border-white/10 sticky top-28">
               <h3 className="text-slate-400 text-xs font-bold mb-4 px-2 uppercase tracking-wider">Categories</h3>
@@ -190,14 +207,18 @@ const GameGuide: React.FC = () => {
                 {categories.map((cat) => {
                   if (cat.name === '掉落查詢') {
                     return (
-                      <a key={cat.name} href={DROP_SEARCH_URL} target="_blank" rel="noreferrer" className="w-full text-left px-4 py-3 rounded transition-all flex items-center gap-3 text-[#fccd4d] hover:bg-[#b38728] hover:text-black border border-[#b38728]/30 hover:border-[#b38728]">
-                        <span>{cat.icon}</span> {cat.name} <span className="text-[10px] ml-auto opacity-70">↗</span>
+                      <a key={cat.name} href={DROP_SEARCH_URL} target="_blank" rel="noreferrer" className="w-full text-left px-4 py-3 rounded transition-all flex items-center gap-3 text-[#fccd4d] hover:bg-[#b38728] hover:text-black border border-[#b38728]/30 hover:border-[#b38728] group">
+                        <cat.icon size={18} /> 
+                        <span className="font-bold">{cat.name}</span> 
+                        <ExternalLink size={14} className="ml-auto opacity-70 group-hover:opacity-100" />
                       </a>
                     );
                   }
                   return (
                     <button key={cat.name} onClick={() => setActiveCategory(cat.name)} className={`w-full text-left px-4 py-3 rounded transition-all flex items-center gap-3 ${activeCategory === cat.name ? 'bg-[#b38728] text-black font-bold shadow-lg shadow-[#b38728]/20' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
-                      <span>{cat.icon}</span> {cat.name}
+                      <cat.icon size={18} /> 
+                      {cat.name}
+                      {activeCategory === cat.name && <ChevronRight size={16} className="ml-auto" />}
                     </button>
                   );
                 })}
@@ -208,12 +229,12 @@ const GameGuide: React.FC = () => {
           {/* 右側內容區 */}
           <div className="flex-1 bg-white/5 rounded-lg border border-white/10 p-6 md:p-8 min-h-[500px]">
             
-            {/* 1. 新手入門區塊 (保持不變) */}
+            {/* 1. 新手入門區塊 */}
             {activeCategory === '新手入門' && (
-              <div className="animate-fadeIn">
-                {/* ... (省略內容) ... */}
+              <div className="animate-fade-in-up">
                 <h2 className="text-xl md:text-2xl font-bold text-white mb-6 flex flex-wrap items-center gap-3">
-                  🔰 新手入門六部曲
+                  <BookOpen className="text-[#fccd4d]" /> 
+                  新手入門六部曲
                   <span className="text-xs bg-[#b38728] text-black px-2 py-1 rounded font-bold whitespace-nowrap">圖文教學</span>
                 </h2>
                 
@@ -238,14 +259,18 @@ const GameGuide: React.FC = () => {
                         {step.images && step.images.length > 0 && (
                           <div className="mt-4 flex flex-wrap gap-4">
                             {step.images.map((imgSrc, imgIdx) => (
-                              <div key={imgIdx} className="relative group rounded-lg border border-white/10 overflow-hidden shadow-lg hover:border-[#b38728]/50 transition bg-black/50">
+                              <div key={imgIdx} className="relative group/img rounded-lg border border-white/10 overflow-hidden shadow-lg hover:border-[#b38728]/50 transition bg-black/50">
                                 <img 
                                   src={imgSrc} 
                                   alt={`Step ${step.step} image ${imgIdx + 1}`} 
-                                  className="h-32 w-auto object-contain cursor-zoom-in group-hover:scale-105 transition-transform duration-300"
+                                  className="h-32 w-auto object-contain cursor-zoom-in group-hover/img:scale-105 transition-transform duration-300"
                                   onClick={() => window.open(imgSrc, '_blank')} 
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.parentElement!.innerHTML = '<div class="h-32 w-32 flex flex-col items-center justify-center text-slate-600 text-[10px] gap-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg><span>暫無圖片</span></div>';
+                                  }}
                                 />
-                                <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-[10px] text-white opacity-0 group-hover:opacity-100 transition pointer-events-none">
+                                <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-[10px] text-white opacity-0 group-hover/img:opacity-100 transition pointer-events-none">
                                   點擊放大
                                 </div>
                               </div>
@@ -259,13 +284,13 @@ const GameGuide: React.FC = () => {
               </div>
             )}
 
-            {/* 2. 職業介紹區塊 (已加大圖標) */}
+            {/* 2. 職業介紹區塊 */}
             {activeCategory === '職業介紹' && (
-              <div className="animate-fadeIn">
-                <h2 className="text-xl md:text-2xl font-bold text-white mb-8 border-l-4 border-[#b38728] pl-4">
+              <div className="animate-fade-in-up">
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-8 border-l-4 border-[#b38728] pl-4 flex items-center gap-3">
+                  <Swords className="text-[#fccd4d]" />
                   七大職業深度解析
                 </h2>
-                {/* 恢復為整齊的 2 欄網格 */}
                 <div className="grid md:grid-cols-2 gap-6">
                   {classes.map((job) => (
                     <ClassCard 
@@ -277,10 +302,11 @@ const GameGuide: React.FC = () => {
               </div>
             )}
 
-            {/* 3. 地圖資訊 (保持不變) */}
+            {/* 3. 地圖資訊 */}
             {activeCategory === '地圖資訊' && (
-              <div className="animate-fadeIn flex flex-col items-center">
-                <h2 className="text-xl md:text-2xl font-bold text-white mb-6 border-l-4 border-[#b38728] pl-4 w-full">
+              <div className="animate-fade-in-up flex flex-col items-center">
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-6 border-l-4 border-[#b38728] pl-4 w-full flex items-center gap-3">
+                  <Map className="text-[#fccd4d]" />
                   世界地圖 & 稀有裝備分佈
                 </h2>
                 <div className="w-full bg-black/40 border border-white/10 p-2 rounded-lg overflow-hidden group">
@@ -291,7 +317,7 @@ const GameGuide: React.FC = () => {
                     onClick={() => window.open('/world_map.png', '_blank')} 
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerHTML = '<div class="p-10 text-center text-red-500">找不到圖片！請確認 world_map.png 有放在 public 資料夾內。</div>';
+                      e.currentTarget.parentElement!.innerHTML = '<div class="p-10 text-center text-red-400 border border-dashed border-red-500/30 rounded">地圖圖片 (world_map.png) 尚未上傳<br/><span class="text-xs text-slate-500">請將圖片放入 public 資料夾</span></div>';
                     }}
                   />
                 </div>

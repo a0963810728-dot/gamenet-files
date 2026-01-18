@@ -1,125 +1,164 @@
+// src/components/AIConsultant.tsx
 import React, { useState, useRef, useEffect } from 'react';
+import { MessageCircle, X, Bot, User, Send, Headphones } from 'lucide-react';
 
-// 定義訊息的格式
-interface Message {
+// 1. 定義問題與答案的資料結構
+interface FAQ {
   id: number;
-  text: string;
-  sender: 'user' | 'ai';
+  question: string;
+  answer: string;
 }
+
+// 2. 預設常見問題 (可隨時擴充)
+const FAQS: FAQ[] = [
+  {
+    id: 1,
+    question: "如何下載遊戲？",
+    answer: "請至官網首頁點擊「下載遊戲」按鈕，我們提供 Google Drive 載點。安裝前請務必關閉防毒軟體以免誤判。"
+  },
+  {
+    id: 2,
+    question: "伺服器倍率是多少？",
+    answer: "經驗倍率：10倍\n正義倍率：5倍\n負重倍率：10倍\n武器/防具強化：2倍\n能力值上限：45\n萬能藥上限：15瓶。致力於打造長久穩定的遊戲環境。"
+  },
+  {
+    id: 3,
+    question: "如何進行贊助？",
+    answer: "請點擊上方選單的「贊助方案」，或是直接聯繫官方 LINE (@746pwlgu) 由專人為您服務。"
+  },
+  {
+    id: 4,
+    question: "帳號被鎖怎麼辦？",
+    answer: "若遇到帳號問題，請直接點擊下方「聯繫真人客服」，並提供您的角色 ID 給管理員查詢。"
+  }
+];
+
+// 定義訊息類型
+type Message = {
+  type: 'bot' | 'user';
+  text: string;
+};
 
 const AIConsultant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  // 初始訊息
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: '勇者你好！我是大道天堂的 AI 引路人。\n請問有什麼我可以幫你的嗎？\n(試著問我：下載、掉落、變身、贊助)', sender: 'ai' }
+    { type: 'bot', text: "您好！我是大道 M 智能助手。請問有什麼可以幫您的嗎？請選擇下方常見問題：" }
   ]);
+  
+  // 用於自動捲動到底部
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 自動捲動到最新訊息
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  // 🤖 AI 的大腦：關鍵字回復邏輯
-  const getAIResponse = (input: string) => {
-    const text = input.toLowerCase();
-    
-    if (text.includes('下載') || text.includes('主程式') || text.includes('懶人包')) {
-      return '📥 主程式下載點已更新！\n請點擊官網首頁中央的「金色按鈕」即可下載。\n解壓縮密碼：123456';
-    }
-    if (text.includes('掉落') || text.includes('寶物') || text.includes('地圖')) {
-      return '🔍 想要查詢掉落物嗎？\n請點擊上方導覽列的「職業介紹/攻略」，裡面有詳細的掉落查詢系統喔！';
-    }
-    if (text.includes('贊助') || text.includes('儲值') || text.includes('元寶')) {
-      return '💎 感謝您的支持！\n目前開服期間優惠：首儲 1:200。\n請聯繫客服 LINE ID: @lineage_gm 進行服務。';
-    }
-    if (text.includes('變身') || text.includes('娃娃')) {
-      return '⚔️ 本服完美復刻 7.6C 版本變身攻速。\n輸入指令 /變身 即可查看列表。';
-    }
-    if (text.includes('你好') || text.includes('嗨') || text.includes('hello')) {
-      return '你好啊！準備好去亞丁大陸冒險了嗎？';
-    }
-    
-    return '🤔 抱歉，這個問題太深奧了，我還在學習中。\n建議您直接聯繫真人客服 LINE: @lineage_gm';
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSendMessage = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    if (!inputValue.trim()) return;
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isOpen]);
 
-    // 1. 增加玩家的訊息
-    const userMsg: Message = { id: Date.now(), text: inputValue, sender: 'user' };
-    setMessages(prev => [...prev, userMsg]);
-    setInputValue('');
-
-    // 2. 模擬 AI 思考延遲 (0.5秒)
+  // 處理點擊問題
+  const handleAsk = (faq: FAQ) => {
+    // 1. 加入使用者的提問
+    setMessages(prev => [...prev, { type: 'user', text: faq.question }]);
+    
+    // 2. 模擬延遲後加入 AI 回覆 (增加真實感)
     setTimeout(() => {
-      const aiResponseText = getAIResponse(userMsg.text);
-      const aiMsg: Message = { id: Date.now() + 1, text: aiResponseText, sender: 'ai' };
-      setMessages(prev => [...prev, aiMsg]);
+      setMessages(prev => [...prev, { type: 'bot', text: faq.answer }]);
     }, 500);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       
-      {/* 對話視窗本體 */}
-      <div className={`mb-4 w-80 md:w-96 bg-black/90 backdrop-blur-md border border-[#b38728]/50 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300 origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 h-0'}`}>
-        
-        {/* 標題列 */}
-        <div className="bg-gradient-to-r from-[#b38728] to-[#fccd4d] p-3 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-black font-black tracking-widest text-sm">GM 小幫手 (Online)</span>
-          </div>
-          <button onClick={() => setIsOpen(false)} className="text-black/60 hover:text-black transition-colors">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
-        </div>
-
-        {/* 訊息顯示區 */}
-        <div className="h-80 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[#b38728] scrollbar-track-black">
-          {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed whitespace-pre-line ${
-                msg.sender === 'user' 
-                  ? 'bg-[#b38728] text-black font-bold rounded-tr-none' 
-                  : 'bg-white/10 text-slate-200 border border-white/5 rounded-tl-none'
-              }`}>
-                {msg.text}
+      {/* --- 聊天視窗 (當 isOpen 為 true 時顯示) --- */}
+      {isOpen && (
+        <div className="mb-4 w-80 sm:w-96 bg-slate-900 border border-yellow-500/30 rounded-xl shadow-2xl overflow-hidden animate-fade-in-up">
+          
+          {/* Header */}
+          <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-4 border-b border-yellow-500/20 flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-yellow-500/20 rounded-full">
+                <Bot className="w-5 h-5 text-yellow-500" />
               </div>
+              <span className="text-yellow-500 font-bold tracking-wide">大道 M 智能助手</span>
             </div>
-          ))}
-          <div ref={messagesEndRef} />
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Chat Content Area */}
+          <div className="h-80 overflow-y-auto p-4 bg-slate-900/95 space-y-4 custom-scrollbar">
+            {messages.map((msg, index) => (
+              <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div 
+                  className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${
+                    msg.type === 'user' 
+                      ? 'bg-yellow-600/20 text-yellow-100 border border-yellow-500/30 rounded-tr-none' 
+                      : 'bg-slate-800 text-gray-200 border border-slate-700 rounded-tl-none'
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            
+            {/* 常見問題按鈕區 (只有當最後一則訊息是機器人時才顯示，避免洗版，這裡設定為常駐顯示在底部但在訊息流之後) */}
+            <div className="mt-4 grid grid-cols-1 gap-2">
+               <p className="text-xs text-gray-500 mb-1 text-center">--- 常見問題 ---</p>
+               {FAQS.map(faq => (
+                 <button
+                   key={faq.id}
+                   onClick={() => handleAsk(faq)}
+                   className="text-left text-sm px-3 py-2 bg-slate-800 hover:bg-yellow-500/10 border border-slate-700 hover:border-yellow-500/50 text-gray-300 hover:text-yellow-400 rounded transition-all duration-300 flex items-center gap-2 group"
+                 >
+                   <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/50 group-hover:bg-yellow-500"></span>
+                   {faq.question}
+                 </button>
+               ))}
+            </div>
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Footer: 真人客服引導 */}
+          <div className="p-3 bg-slate-950 border-t border-yellow-500/20">
+            <a 
+              href="https://lin.ee/yOavIV8" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-yellow-600 hover:bg-yellow-500 text-black font-bold rounded transition-all duration-300 shadow-[0_0_10px_rgba(234,179,8,0.2)] hover:shadow-[0_0_15px_rgba(234,179,8,0.4)]"
+            >
+              <Headphones className="w-4 h-4" />
+              聯繫真人客服 (LINE)
+            </a>
+          </div>
         </div>
+      )}
 
-        {/* 輸入區 */}
-        <form onSubmit={handleSendMessage} className="p-3 border-t border-white/10 bg-black/50 flex gap-2">
-          <input 
-            type="text" 
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="請輸入關鍵字 (如: 下載)..."
-            className="flex-1 bg-white/5 border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#fccd4d] transition-colors"
-          />
-          <button type="submit" className="bg-[#fccd4d] hover:bg-[#b38728] text-black px-4 py-2 rounded font-bold transition-colors">
-            發送
-          </button>
-        </form>
-      </div>
-
-      {/* 懸浮按鈕 (開關) */}
-      <button 
+      {/* --- 懸浮按鈕 (Toggle Button) --- */}
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(252,205,77,0.4)] transition-all duration-300 hover:scale-110 ${isOpen ? 'bg-slate-700 text-slate-400 rotate-90' : 'bg-gradient-to-br from-[#fccd4d] to-[#b38728] text-black animate-bounce-slow'}`}
+        className={`group relative flex items-center justify-center w-14 h-14 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all duration-300 ${
+          isOpen 
+            ? 'bg-slate-800 text-gray-400 rotate-90' 
+            : 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-black hover:scale-110'
+        }`}
       >
+        {/* 呼吸燈特效光暈 (只在關閉時顯示) */}
+        {!isOpen && (
+          <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75 animate-ping"></span>
+        )}
+        
         {isOpen ? (
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          <X className="w-6 h-6" />
         ) : (
-          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+          <MessageCircle className="w-7 h-7 relative z-10" />
         )}
       </button>
-
     </div>
   );
 };

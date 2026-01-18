@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 🔥 1. 禁止所有圖片被選取與拖曳 (防盜圖) */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none; /* 預設不讓圖片阻擋點擊 */
+}
+
+/* 🔥 2. 例外處理：如果是按鈕內的圖片，或是連結內的圖片，要允許點擊 */
+button img, a img, .clickable-img {
+  pointer-events: auto;
+}
+
+/* 🔥 3. 自定義高級感捲軸 (Chrome/Safari/Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0f172a; /* 深色軌道 */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ca8a04; /* 黃金色拉桿 */
+  border-radius: 20px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #eab308; /* Hover 變亮 */
+}
