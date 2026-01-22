@@ -1,6 +1,6 @@
 // src/components/DownloadModal.tsx
 import React, { useEffect } from 'react';
-import { X, Download, AlertTriangle, HardDrive, Cloud } from 'lucide-react';
+import { X, Download, AlertTriangle } from 'lucide-react';
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -31,16 +31,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // 定義載點資料
+  // 定義載點資料 (只保留兩個懶人包按鈕)
   const downloadSources = [
-    {
-      name: 'Google Drive',
-      icon: HardDrive,
-      color: 'text-blue-400',
-      bg: 'hover:bg-blue-500/20',
-      border: 'hover:border-blue-400',
-      url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing' 
-    },
     {
       name: '懶人包 (主程式+補丁)',
       icon: Download,
@@ -90,7 +82,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className="p-6 md:p-8 space-y-6">
           
-          {/* 警告區塊 (保留老爹指定的下載前重要提醒) */}
+          {/* 警告區塊 */}
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 flex items-start gap-3">
             <AlertTriangle className="text-red-500 flex-shrink-0 mt-1" size={20} />
             <div className="text-sm text-slate-300 leading-relaxed">
@@ -122,8 +114,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
                 {/* 狀態標籤 */}
-                <div className={`text-xs px-3 py-1 rounded border border-white/5 ${source.url ? 'text-slate-400 bg-green-500/10 border-green-500/30' : 'text-yellow-500 bg-yellow-500/10 border-yellow-500/30'}`}>
-                  {source.url ? '點擊下載' : '準備中'}
+                <div className="text-xs px-3 py-1 rounded border border-green-500/30 text-slate-400 bg-green-500/10">
+                  點擊下載
                 </div>
               </a>
             ))}
