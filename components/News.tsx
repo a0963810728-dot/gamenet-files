@@ -15,7 +15,7 @@ const News: React.FC = () => {
       id: 2,
       category: '活動',
       date: '01/31',
-      title: '【全民推廣計畫】每日完成推廣可領取1萬藍鑽 !',
+      title: '【全民推廣計畫】每日完成推廣可領取3000藍鑽 !',
       desc: '活動期間內，將「指定內容」發布到任一社群平台 擇1平台（FB / IG / Threads）。', // 稍微修飾了標點符號
       isHot: false,
     },

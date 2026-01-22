@@ -17,23 +17,21 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
     }
     return () => {
       document.body.style.overflow = 'unset';
-    };
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   // 🔥 處理點擊下載按鈕的邏輯
   const handleClick = (e: React.MouseEvent, url: string, name: string) => {
-    // 如果網址是空的 (還沒準備好)
     if (!url || url === '#') {
       e.preventDefault(); // 阻止跳轉
       alert(`【${name}】即將開放，敬請鎖定官方 LINE 公告！`);
       return;
     }
-    // 如果有網址，就正常開啟
   };
 
-  // 定義載點資料 (🔥 目前先設為空字串，代表準備中)
+  // 定義載點資料
   const downloadSources = [
     {
       name: 'Google Drive',
@@ -41,7 +39,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
       color: 'text-blue-400',
       bg: 'hover:bg-blue-500/20',
       border: 'hover:border-blue-400',
-      url: '' // 🔥 等之後有連結了，填入這裡 (例如 'https://drive.google.com/...')
+      // 🔥 已更新 Google Drive 載點
+      url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing' 
     },
     {
       name: 'Mega 空間',
@@ -49,7 +48,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
       color: 'text-red-400',
       bg: 'hover:bg-red-500/20',
       border: 'hover:border-red-400',
-      url: '' // 🔥 這裡也是，暫時留空
+      url: '' // 暫時留空
     },
     {
       name: '懶人包 (主程式+補丁)',
@@ -57,7 +56,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
       color: 'text-[#fccd4d]',
       bg: 'hover:bg-[#fccd4d]/20',
       border: 'hover:border-[#fccd4d]',
-      url: '' // 🔥 暫時留空
+      // 🔥 已更新懶人包載點
+      url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing'
     }
   ];
 
@@ -106,10 +106,10 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
             {downloadSources.map((source, index) => (
               <a
                 key={index}
-                href={source.url || '#'} // 如果是空，預設給 # 防止報錯
+                href={source.url || '#'} 
                 target="_blank"
                 rel="noreferrer"
-                onClick={(e) => handleClick(e, source.url, source.name)} // 🔥 綁定點擊檢查事件
+                onClick={(e) => handleClick(e, source.url, source.name)}
                 className={`
                   group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 
                   transition-all duration-300 ${source.bg} ${source.border} cursor-pointer
@@ -123,8 +123,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
                     {source.name}
                   </span>
                 </div>
-                {/* 狀態標籤：根據是否有網址來顯示不同文字 */}
-                <div className={`text-xs px-3 py-1 rounded border border-white/5 ${source.url ? 'text-slate-500 bg-black/50' : 'text-yellow-500 bg-yellow-500/10 border-yellow-500/30'}`}>
+                {/* 狀態標籤 */}
+                <div className={`text-xs px-3 py-1 rounded border border-white/5 ${source.url ? 'text-slate-400 bg-green-500/10 border-green-500/30' : 'text-yellow-500 bg-yellow-500/10 border-yellow-500/30'}`}>
                   {source.url ? '點擊下載' : '準備中'}
                 </div>
               </a>
