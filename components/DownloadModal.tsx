@@ -39,16 +39,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
       color: 'text-blue-400',
       bg: 'hover:bg-blue-500/20',
       border: 'hover:border-blue-400',
-      // 🔥 已更新 Google Drive 載點
       url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing' 
-    },
-    {
-      name: 'Mega 空間',
-      icon: Cloud,
-      color: 'text-red-400',
-      bg: 'hover:bg-red-500/20',
-      border: 'hover:border-red-400',
-      url: '' // 暫時留空
     },
     {
       name: '懶人包 (主程式+補丁)',
@@ -56,14 +47,21 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
       color: 'text-[#fccd4d]',
       bg: 'hover:bg-[#fccd4d]/20',
       border: 'hover:border-[#fccd4d]',
-      // 🔥 已更新懶人包載點
+      url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing'
+    },
+    {
+      name: '懶人包 (主程式+補丁)-備用載點',
+      icon: Download,
+      color: 'text-[#fccd4d]',
+      bg: 'hover:bg-[#fccd4d]/20',
+      border: 'hover:border-[#fccd4d]',
       url: 'https://drive.google.com/file/d/1UuyT-aa6_uyACAO-O8j3WkWiVMDjeosy/view?usp=sharing'
     }
   ];
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
-      {/* 1. 黑色半透明背景 (點擊背景可關閉) */}
+      {/* 1. 黑色半透明背景 */}
       <div 
         className="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
@@ -92,7 +90,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className="p-6 md:p-8 space-y-6">
           
-          {/* 警告區塊 */}
+          {/* 警告區塊 (保留老爹指定的下載前重要提醒) */}
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 flex items-start gap-3">
             <AlertTriangle className="text-red-500 flex-shrink-0 mt-1" size={20} />
             <div className="text-sm text-slate-300 leading-relaxed">
