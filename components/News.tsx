@@ -1,44 +1,52 @@
 import React from 'react';
 
 const News: React.FC = () => {
-  // 假資料：已更新為您撰寫的 1/30 開服與推廣活動版本
+  // 🔧 老爹，這裡是公告控制中心！
+  // 您只要修改下面這個 newsItems 列表，網頁上的公告就會變。
   const newsItems = [
     {
       id: 1,
-      category: '重磅',
-      date: '01/31',
-      title: '【王者降臨】1/30 晚上 20:00 正式火爆開服！',
-      desc: '全台最穩機房，誓言打造最後一個天堂。創角直升50等 即送新手專屬禮包！',
-      isHot: true, 
+      category: '活動', // 標籤：活動
+      date: '02/11',    // 新增日期
+      title: '🔥【新春狂歡】金馬迎春！BOSS 暴走大放送！', 
+      desc: '全服 BOSS 100% 掉落「新春紅包」！打死必噴！內含傳說武器製作秘笈、神奇聖物箱、英雄技能自選箱等稀有寶物。', 
+      isHot: true,      // 顯示 HOT 特效
     },
     {
       id: 2,
-      category: '活動',
-      date: '01/31',
-      title: '【全民推廣計畫】每日完成推廣可領取3000藍鑽 !',
-      desc: '活動期間內，將「指定內容」發布到任一社群平台 擇1平台（FB / IG / Threads）。', // 稍微修飾了標點符號
-      isHot: false,
+      category: '重磅', // 標籤：重磅
+      date: '02/11',
+      title: '💰【限時加碼】贊助獎勵 🔥 雙倍送 🔥', 
+      desc: '即刻起至 2/20 維修前，贊助回饋全面 x雙倍！(平日 1000 點 ➔ 活動期間 2000 點！紅利同步雙倍送！)',
+      isHot: true,
     },
     {
       id: 3,
-      category: '公告',
-      date: '01/31',
-      title: '【重要】伺服器線路優化與防護升級說明',
-      desc: '為提供穩定的遊戲環境，我們已加裝高防禦清洗線路，杜絕任何攻擊，請玩家安心遊玩。',
+      category: '商城', // 標籤：商城
+      date: '02/11',
+      title: '【商城新品】戰力衝刺包 & 全民福利同步上架',
+      desc: '全民福利(天幣)：等級 72 每日限購 10 個 / 戰力衝刺(鑽石)：特價 99 藍鑽 (購買無上限)。',
       isHot: false,
     },
     {
       id: 4,
-      category: '系統',
+      category: '活動',
+      date: '02/11',
+      title: '【祝福大禮包】新春限定販售',
+      desc: '內含神力藥水(50%、75%、100%)，讓您過年練功事半功倍！',
+      isHot: false,
+    },
+    {
+      id: 5,
+      category: '活動',
       date: '01/31',
-      title: '敬請期待',
-      desc: '豐富內容逐步更新。',
+      title: '【全民推廣計畫】每日完成推廣可領取3000藍鑽 !', 
+      desc: '活動期間內，將「指定內容」發布到任一社群平台 擇1平台（FB / IG / Threads）。',
       isHot: false,
     },
   ];
 
   return (
-    // 👇 關鍵修正：這裡必須加上 id="news"，導覽列才連得到！
     <section id="news" className="relative w-full py-20 bg-[#050505] overflow-hidden">
       {/* 背景裝飾：金色光暈 */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#fccd4d] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
@@ -53,6 +61,7 @@ const News: React.FC = () => {
             </h2>
             <p className="text-slate-500 mt-2 text-sm tracking-widest">掌握亞丁大陸的第一手消息</p>
           </div>
+          {/* 電腦版查看更多 */}
           <a href="#" className="hidden md:flex items-center gap-2 text-[#fccd4d] hover:text-white transition-colors text-sm font-bold tracking-widest group">
             查看更多 
             <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -76,6 +85,7 @@ const News: React.FC = () => {
                   <span className={`px-3 py-1 rounded text-xs font-bold tracking-widest border ${
                     item.category === '重磅' ? 'border-red-500/50 bg-red-500/10 text-red-400' :
                     item.category === '活動' ? 'border-blue-500/50 bg-blue-500/10 text-blue-400' :
+                    item.category === '商城' ? 'border-yellow-500/50 bg-yellow-500/10 text-yellow-400' :
                     'border-slate-500/50 bg-slate-500/10 text-slate-400'
                   }`}>
                     {item.category}
@@ -87,6 +97,7 @@ const News: React.FC = () => {
                 <div className="flex-1">
                   <h3 className={`text-lg font-bold mb-1 transition-colors group-hover:text-[#fccd4d] ${item.isHot ? 'text-[#fccd4d]' : 'text-slate-200'}`}>
                     {item.title}
+                    {/* HOT 標籤 */}
                     {item.isHot && <span className="ml-2 inline-block animate-pulse text-[10px] bg-red-600 text-white px-1.5 rounded">HOT</span>}
                   </h3>
                   <p className="text-slate-500 text-sm line-clamp-1 group-hover:text-slate-400 transition-colors">
