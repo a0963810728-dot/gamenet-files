@@ -16,32 +16,32 @@ const Hero: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-end overflow-hidden bg-black pb-10 md:pb-16">
-      
+
       {/* --- 背景區塊 --- */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black/50 z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/90 z-10" />
-        
+
         <video
           ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          poster="/hero-bg-v2.png" 
+          poster="/hero-bg-v2.png"
           className="w-full h-full object-cover"
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
           <img src="/hero-bg-v2.png" alt="Background" className="w-full h-full object-cover" />
         </video>
       </div>
-      
+
       {/* --- 主內容區 --- */}
       <div className="relative z-20 text-center px-4 max-w-6xl mx-auto w-full flex flex-col items-center gap-4">
-        
+
         {/* 標題區 */}
-        <h1 
-          data-aos="fade-up" 
+        <h1
+          data-aos="fade-up"
           data-aos-duration="1200"
           className="text-4xl md:text-6xl font-black tracking-widest relative z-10"
         >
@@ -56,40 +56,40 @@ const Hero: React.FC = () => {
             再戰亞丁
           </span>
         </h1>
-        
+
         {/* 描述文字 */}
-        <p 
+        <p
           data-aos="fade-up"
           data-aos-delay="300"
           className="text-slate-400 text-sm md:text-lg font-light tracking-[0.2em] leading-relaxed opacity-80 mb-2"
         >
           當年沒做完的夢，今天在這裡延續。<span className="hidden md:inline"> | </span><span className="text-[#fccd4d]">最強變身</span>、<span className="text-[#fccd4d]">神武全開</span>
         </p>
-        
+
         {/* 按鈕與狀態區 */}
-        <div 
+        <div
           data-aos="zoom-in"
           data-aos-delay="500"
           className="flex flex-col md:flex-row items-center justify-center gap-5 mt-2"
         >
           {/* 1. 下載按鈕 */}
-          <button 
-            className="group relative hover:scale-105 transition-all duration-300 transform focus:outline-none bg-transparent" 
+          <button
+            className="group relative hover:scale-105 transition-all duration-300 transform focus:outline-none bg-transparent"
             onClick={() => window.open(siteConfig.downloadUrl, '_blank')}
           >
             <div className="absolute inset-4 bg-[#fccd4d] opacity-0 group-hover:opacity-30 blur-xl rounded-full transition-opacity duration-500 -z-10 animate-pulse"></div>
-            <img 
-              src="/download-btn-transparent.png" 
-              alt="主程式下載" 
+            <img
+              src="/download-btn-transparent.png"
+              alt="主程式下載"
               className="w-auto h-16 md:h-20 drop-shadow-lg group-hover:drop-shadow-[0_0_15px_rgba(252,205,77,0.6)]"
             />
           </button>
 
           {/* 2. 玩家社群按鈕 (網址已更新) */}
-          <a 
-            href="https://line.me/ti/g2/RMM_CtMRTpykSWwVKtQ69xf7vc32_xo9LeWTWg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" 
+          <a
+            href="https://line.me/ti/g2/RMM_CtMRTpykSWwVKtQ69xf7vc32_xo9LeWTWg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group relative flex items-center gap-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white px-6 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(22,163,74,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] border border-green-400/30"
           >
             <MessageCircle className="w-6 h-6 animate-bounce" />
@@ -113,7 +113,7 @@ const Hero: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>

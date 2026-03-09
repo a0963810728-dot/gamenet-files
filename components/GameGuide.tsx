@@ -1,6 +1,6 @@
 // src/components/GameGuide.tsx
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
+import {
   BookOpen, // 新手入門
   Swords,   // 職業介紹
   Map,      // 地圖資訊
@@ -178,16 +178,16 @@ const SKILL_DATABASE = [
 const getSkillJob = (imageName: string): string => {
   const match = imageName.match(/SKILL (\d+)\.png/);
   if (!match) return '其他';
-  
+
   const num = parseInt(match[1]);
-  
+
   if (num >= 0 && num <= 7) return '王族';
   if (num >= 8 && num <= 31) return '妖精';
   if (num >= 32 && num <= 118) return '法師';
   if (num >= 119 && num <= 144) return '黑妖';
   if (num >= 145 && num <= 192) return '戰士';
   if (num >= 193 && num <= 207) return '龍騎士';
-  if (num >= 208 && num <= 221) return '騎士'; 
+  if (num >= 208 && num <= 221) return '騎士';
 
   return '其他';
 };
@@ -221,9 +221,9 @@ const ClassCard: React.FC<{ job: Job }> = ({ job }) => (
   <div className="bg-[#050505] border border-white/10 rounded-2xl p-6 hover:border-[#fccd4d]/50 transition-all duration-500 hover:-translate-y-2 overflow-hidden group relative">
     <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl group-hover:bg-purple-600/20 transition-all pointer-events-none"></div>
     <div className="flex justify-center mb-6 relative z-10">
-      <img 
-        src={job.image} 
-        alt={job.name} 
+      <img
+        src={job.image}
+        alt={job.name}
         onError={(e) => {
           e.currentTarget.style.display = 'none';
           if (e.currentTarget.parentElement) {
@@ -258,8 +258,8 @@ const ClassCard: React.FC<{ job: Job }> = ({ job }) => (
 const SkillCard: React.FC<{ skill: any }> = ({ skill }) => (
   <div className="bg-[#0f0f0f] border border-white/5 rounded-xl p-4 hover:border-[#fccd4d]/30 transition-all group flex flex-col md:flex-row gap-4 items-start md:items-center">
     <div className="flex-shrink-0 w-10 h-10 rounded bg-[#1a1a1a] flex items-center justify-center overflow-hidden relative shadow-inner">
-      <img 
-        src={`/skills/${skill.image}`} 
+      <img
+        src={`/skills/${skill.image}`}
         alt={skill.name}
         onError={(e) => {
           e.currentTarget.style.display = 'none';
@@ -270,7 +270,7 @@ const SkillCard: React.FC<{ skill: any }> = ({ skill }) => (
         className="w-full h-full object-contain scale-125 group-hover:scale-110 transition-transform duration-300"
       />
     </div>
-    
+
     <div className="flex-1 min-w-0">
       <div className="flex flex-wrap items-center gap-2 mb-1">
         <h4 className="text-[#fccd4d] font-bold truncate text-base">{skill.name}</h4>
@@ -296,7 +296,7 @@ const SkillCard: React.FC<{ skill: any }> = ({ skill }) => (
 //  3. 主元件 GameGuide
 // =========================================================================
 const GameGuide: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState('新手入門'); 
+  const [activeCategory, setActiveCategory] = useState('新手入門');
   const [skillSearch, setSkillSearch] = useState('');
   const [skillJobFilter, setSkillJobFilter] = useState('全部');
 
@@ -304,13 +304,13 @@ const GameGuide: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const DROP_SEARCH_URL = "https://cartest-ih32.onrender.com"; 
+  const DROP_SEARCH_URL = "https://cartest-ih32.onrender.com";
 
   const filteredSkills = useMemo(() => {
     return SKILL_DATABASE.filter(skill => {
       const job = getSkillJob(skill.image);
-      const matchesSearch = skill.name.toLowerCase().includes(skillSearch.toLowerCase()) || 
-                           skill.effect.toLowerCase().includes(skillSearch.toLowerCase());
+      const matchesSearch = skill.name.toLowerCase().includes(skillSearch.toLowerCase()) ||
+        skill.effect.toLowerCase().includes(skillSearch.toLowerCase());
       const matchesJob = skillJobFilter === '全部' || job === skillJobFilter;
       return matchesSearch && matchesJob;
     });
@@ -427,7 +427,7 @@ const GameGuide: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-20 bg-[url('/bg-grid.svg')] bg-fixed">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        
+
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest mb-4">
@@ -440,192 +440,191 @@ const GameGuide: React.FC = () => {
 
         {/* Main Layout: Flex Container */}
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          
+
           {/* Left Sidebar Navigation */}
           <div className="w-full lg:w-64 flex-shrink-0 space-y-2">
-             <div className="text-xs font-bold text-slate-500 tracking-widest mb-4 px-2">CATEGORIES</div>
-             <div className="flex flex-col gap-3">
-                {menuItems.map((item) => {
-                  const isActive = activeCategory === item.id;
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveCategory(item.id)}
-                      className={`group flex items-center justify-between w-full p-4 rounded-xl border transition-all duration-300 text-left relative overflow-hidden
-                        ${isActive 
-                          ? 'bg-[#fccd4d]/10 border-[#fccd4d] text-[#fccd4d]' 
-                          : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10 hover:border-white/20 hover:text-slate-200'
-                        }`}
-                    >
-                      <div className="flex items-center gap-3 z-10">
-                        <Icon size={20} className={isActive ? 'text-[#fccd4d]' : 'text-slate-500 group-hover:text-slate-300'} />
-                        <span className="font-bold tracking-wide">{item.label}</span>
-                      </div>
-                      {isActive && <ChevronRight size={16} className="text-[#fccd4d] animate-pulse" />}
-                    </button>
-                  );
-                })}
+            <div className="text-xs font-bold text-slate-500 tracking-widest mb-4 px-2">CATEGORIES</div>
+            <div className="flex flex-col gap-3">
+              {menuItems.map((item) => {
+                const isActive = activeCategory === item.id;
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveCategory(item.id)}
+                    className={`group flex items-center justify-between w-full p-4 rounded-xl border transition-all duration-300 text-left relative overflow-hidden
+                        ${isActive
+                        ? 'bg-[#fccd4d]/10 border-[#fccd4d] text-[#fccd4d]'
+                        : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10 hover:border-white/20 hover:text-slate-200'
+                      }`}
+                  >
+                    <div className="flex items-center gap-3 z-10">
+                      <Icon size={20} className={isActive ? 'text-[#fccd4d]' : 'text-slate-500 group-hover:text-slate-300'} />
+                      <span className="font-bold tracking-wide">{item.label}</span>
+                    </div>
+                    {isActive && <ChevronRight size={16} className="text-[#fccd4d] animate-pulse" />}
+                  </button>
+                );
+              })}
 
-                {/* 獨立的掉落查詢按鈕 (External Link) */}
-                <a 
-                  href={DROP_SEARCH_URL} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="group flex items-center justify-between w-full p-4 rounded-xl border border-white/5 bg-white/5 text-slate-400 hover:bg-white/10 hover:border-green-500/30 hover:text-green-400 transition-all duration-300"
-                >
-                   <div className="flex items-center gap-3">
-                      <Search size={20} className="text-slate-500 group-hover:text-green-400 transition-colors" />
-                      <span className="font-bold tracking-wide">掉落查詢</span>
-                   </div>
-                   <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" />
-                </a>
-             </div>
+              {/* 獨立的掉落查詢按鈕 (External Link) */}
+              <a
+                href={DROP_SEARCH_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between w-full p-4 rounded-xl border border-white/5 bg-white/5 text-slate-400 hover:bg-white/10 hover:border-green-500/30 hover:text-green-400 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3">
+                  <Search size={20} className="text-slate-500 group-hover:text-green-400 transition-colors" />
+                  <span className="font-bold tracking-wide">掉落查詢</span>
+                </div>
+                <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" />
+              </a>
+            </div>
           </div>
 
           {/* Right Content Area */}
           <div className="flex-1 w-full min-w-0">
-             <div className="bg-[#0a0a0a]/80 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-white/10 min-h-[600px] shadow-2xl shadow-black/50 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50"></div>
-                
-                {/* 1. 新手入門區塊 */}
-                {activeCategory === '新手入門' && (
-                  <div className="animate-fade-in-up">
-                     <div className="flex items-center gap-3 mb-8">
-                       <BookOpen className="text-[#fccd4d]" size={28}/>
-                       <h2 className="text-2xl font-bold text-white">
-                        新手入門六部曲 <span className="ml-3 text-xs bg-[#fccd4d] text-black px-2 py-0.5 rounded font-bold">圖文教學</span>
-                       </h2>
-                    </div>
-                     <div className="space-y-8 text-slate-300">
-                        {guideSteps.map((step, index) => (
-                           <div key={index} className="bg-black/40 border border-white/10 rounded-2xl overflow-hidden hover:border-[#fccd4d]/30 transition-colors duration-300">
-                              <div className="p-6">
-                                 {/* Step Title */}
-                                 <div className="flex items-center gap-3 mb-4">
-                                    <span className="px-2 py-1 bg-[#fccd4d]/20 border border-[#fccd4d]/50 text-[#fccd4d] text-xs font-bold rounded">STEP {step.step}</span>
-                                    <h3 className="text-xl font-bold text-white">{step.title}</h3>
-                                 </div>
-                                 
-                                 {/* Content */}
-                                 <div className="mb-6 text-slate-400 leading-relaxed">
-                                   {step.content}
-                                 </div>
+            <div className="bg-[#0a0a0a]/80 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-white/10 min-h-[600px] shadow-2xl shadow-black/50 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50"></div>
 
-                                 {/* Dynamic Image Rendering */}
-                                 {step.images && step.images.length > 0 && (
-                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                                     {step.images.map((imgSrc, imgIdx) => (
-                                       <div key={imgIdx} className="rounded-lg overflow-hidden border border-white/10 bg-black/50 group">
-                                         <div className="relative aspect-video">
-                                            <img 
-                                              src={imgSrc} 
-                                              alt={`${step.title} 流程圖 ${imgIdx + 1}`}
-                                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                                              onError={(e) => {
-                                                e.currentTarget.style.display = 'none';
-                                                if (e.currentTarget.parentElement) {
-                                                  e.currentTarget.parentElement.innerHTML = `
+              {/* 1. 新手入門區塊 */}
+              {activeCategory === '新手入門' && (
+                <div className="animate-fade-in-up">
+                  <div className="flex items-center gap-3 mb-8">
+                    <BookOpen className="text-[#fccd4d]" size={28} />
+                    <h2 className="text-2xl font-bold text-white">
+                      新手入門六部曲 <span className="ml-3 text-xs bg-[#fccd4d] text-black px-2 py-0.5 rounded font-bold">圖文教學</span>
+                    </h2>
+                  </div>
+                  <div className="space-y-8 text-slate-300">
+                    {guideSteps.map((step, index) => (
+                      <div key={index} className="bg-black/40 border border-white/10 rounded-2xl overflow-hidden hover:border-[#fccd4d]/30 transition-colors duration-300">
+                        <div className="p-6">
+                          {/* Step Title */}
+                          <div className="flex items-center gap-3 mb-4">
+                            <span className="px-2 py-1 bg-[#fccd4d]/20 border border-[#fccd4d]/50 text-[#fccd4d] text-xs font-bold rounded">STEP {step.step}</span>
+                            <h3 className="text-xl font-bold text-white">{step.title}</h3>
+                          </div>
+
+                          {/* Content */}
+                          <div className="mb-6 text-slate-400 leading-relaxed">
+                            {step.content}
+                          </div>
+
+                          {/* Dynamic Image Rendering */}
+                          {step.images && step.images.length > 0 && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                              {step.images.map((imgSrc, imgIdx) => (
+                                <div key={imgIdx} className="rounded-lg overflow-hidden border border-white/10 bg-black/50 group">
+                                  <div className="relative aspect-video">
+                                    <img
+                                      src={imgSrc}
+                                      alt={`${step.title} 流程圖 ${imgIdx + 1}`}
+                                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                      onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                        if (e.currentTarget.parentElement) {
+                                          e.currentTarget.parentElement.innerHTML = `
                                                     <div class="flex flex-col items-center justify-center w-full h-full text-slate-500 text-xs p-4 bg-[#1a1a1a]">
                                                       <span class="mb-1 text-2xl opacity-30">🖼️</span>
                                                       <span>圖片待補</span>
                                                       <span class="text-[10px] opacity-50 mt-1 font-mono">${imgSrc}</span>
                                                     </div>
                                                   `;
-                                                }
-                                              }}
-                                            />
-                                         </div>
-                                       </div>
-                                     ))}
-                                   </div>
-                                 )}
-                              </div>
-                           </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 2. 職業介紹區塊 */}
-                {activeCategory === '職業介紹' && (
-                  <div className="animate-fade-in-up">
-                    <div className="flex items-center gap-3 mb-8">
-                       <Swords className="text-[#fccd4d]" size={28}/>
-                       <h2 className="text-2xl font-bold text-white">七大職業深度解析</h2>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {classes.map((job) => <ClassCard key={job.name} job={job} />)}
-                    </div>
-                  </div>
-                )}
-
-                {/* 3. 技能介紹區塊 */}
-                {activeCategory === '技能介紹' && (
-                  <div className="animate-fade-in-up">
-                    <div className="flex items-center gap-3 mb-6">
-                       <Zap className="text-[#fccd4d]" size={28}/>
-                       <h2 className="text-2xl font-bold text-white">技能資料庫查詢</h2>
-                    </div>
-                    <div className="bg-black/30 p-4 rounded-xl border border-white/10 mb-8 space-y-5">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                        <input 
-                          type="text" 
-                          placeholder="輸入技能名稱或效果關鍵字..." 
-                          className="w-full bg-[#050505] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-slate-200 focus:outline-none focus:border-[#fccd4d]"
-                          value={skillSearch}
-                          onChange={(e) => setSkillSearch(e.target.value)}
-                        />
+                                        }
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        {jobsList.map(job => (
-                          <button 
-                            key={job}
-                            onClick={() => setSkillJobFilter(job)}
-                            className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${
-                              skillJobFilter === job ? 'bg-purple-600/30 text-purple-300 border-purple-500' : 'bg-white/5 text-slate-400 border-transparent hover:bg-white/10'
-                            }`}
-                          >
-                            {job}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
-                      {filteredSkills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
-                    </div>
+                    ))}
                   </div>
-                )}
+                </div>
+              )}
 
-                {/* 4. 地圖資訊區塊 (完整補回) */}
-                {activeCategory === '地圖資訊' && (
-                  <div className="animate-fade-in-up flex flex-col items-center">
-                    <h2 className="text-xl md:text-2xl font-bold text-white mb-6 border-l-4 border-[#b38728] pl-4 w-full flex items-center gap-3">
-                      <Map className="text-[#fccd4d]" />
-                      世界地圖 & 稀有裝備分佈
-                    </h2>
-                    <div className="w-full bg-black/40 border border-white/10 p-2 rounded-lg overflow-hidden group">
-                      <img 
-                        src="/world_map.png" 
-                        alt="World Map" 
-                        className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500 cursor-zoom-in"
-                        onClick={() => window.open('/world_map.png', '_blank')} 
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          if (e.currentTarget.parentElement) {
-                            e.currentTarget.parentElement.innerHTML = '<div class="p-10 text-center text-red-400 border border-dashed border-red-500/30 rounded">地圖圖片 (world_map.png) 尚未上傳<br/><span class="text-xs text-slate-500">請將圖片放入 public 資料夾</span></div>';
-                          }
-                        }}
+              {/* 2. 職業介紹區塊 */}
+              {activeCategory === '職業介紹' && (
+                <div className="animate-fade-in-up">
+                  <div className="flex items-center gap-3 mb-8">
+                    <Swords className="text-[#fccd4d]" size={28} />
+                    <h2 className="text-2xl font-bold text-white">七大職業深度解析</h2>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {classes.map((job) => <ClassCard key={job.name} job={job} />)}
+                  </div>
+                </div>
+              )}
+
+              {/* 3. 技能介紹區塊 */}
+              {activeCategory === '技能介紹' && (
+                <div className="animate-fade-in-up">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Zap className="text-[#fccd4d]" size={28} />
+                    <h2 className="text-2xl font-bold text-white">技能資料庫查詢</h2>
+                  </div>
+                  <div className="bg-black/30 p-4 rounded-xl border border-white/10 mb-8 space-y-5">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                      <input
+                        type="text"
+                        placeholder="輸入技能名稱或效果關鍵字..."
+                        className="w-full bg-[#050505] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-slate-200 focus:outline-none focus:border-[#fccd4d]"
+                        value={skillSearch}
+                        onChange={(e) => setSkillSearch(e.target.value)}
                       />
                     </div>
-                    <p className="text-slate-500 text-sm mt-4 flex items-center gap-2">
-                      <span className="bg-[#b38728] text-black text-[10px] px-2 py-0.5 rounded font-bold">TIP</span>
-                      點擊地圖可開啟原始大圖檢視，右鍵可另存圖片。
-                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {jobsList.map(job => (
+                        <button
+                          key={job}
+                          onClick={() => setSkillJobFilter(job)}
+                          className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${skillJobFilter === job ? 'bg-purple-600/30 text-purple-300 border-purple-500' : 'bg-white/5 text-slate-400 border-transparent hover:bg-white/10'
+                            }`}
+                        >
+                          {job}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                )}
-              </div>
+                  <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
+                    {filteredSkills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
+                  </div>
+                </div>
+              )}
+
+              {/* 4. 地圖資訊區塊 (完整補回) */}
+              {activeCategory === '地圖資訊' && (
+                <div className="animate-fade-in-up flex flex-col items-center">
+                  <h2 className="text-xl md:text-2xl font-bold text-white mb-6 border-l-4 border-[#b38728] pl-4 w-full flex items-center gap-3">
+                    <Map className="text-[#fccd4d]" />
+                    世界地圖 & 稀有裝備分佈
+                  </h2>
+                  <div className="w-full bg-black/40 border border-white/10 p-2 rounded-lg overflow-hidden group">
+                    <img
+                      src="/world_map.png"
+                      alt="World Map"
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500 cursor-zoom-in"
+                      onClick={() => window.open('/world_map.png', '_blank')}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        if (e.currentTarget.parentElement) {
+                          e.currentTarget.parentElement.innerHTML = '<div class="p-10 text-center text-red-400 border border-dashed border-red-500/30 rounded">地圖圖片 (world_map.png) 尚未上傳<br/><span class="text-xs text-slate-500">請將圖片放入 public 資料夾</span></div>';
+                        }
+                      }}
+                    />
+                  </div>
+                  <p className="text-slate-500 text-sm mt-4 flex items-center gap-2">
+                    <span className="bg-[#b38728] text-black text-[10px] px-2 py-0.5 rounded font-bold">TIP</span>
+                    點擊地圖可開啟原始大圖檢視，右鍵可另存圖片。
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
         </div>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# 禁止爬取特定路徑
+Disallow: /api/
+Disallow: /*.json$
+
+# Sitemap 位置
+Sitemap: https://yourdomain.com/sitemap.xml

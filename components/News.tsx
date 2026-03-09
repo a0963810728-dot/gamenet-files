@@ -32,8 +32,8 @@ const News: React.FC = () => {
       id: 4,
       category: '活動',
       date: '02/11',
-      title: '【祝福大禮包】新春限定販售',
-      desc: '內含神力藥水(50%、75%、100%)，讓您過年練功事半功倍！',
+      title: '【祝福大禮包】販售',
+      desc: '內有祝福聖水額外贈送守護石',
       isHot: false,
     },
     {
