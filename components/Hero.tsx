@@ -1,11 +1,13 @@
 // src/components/Hero.tsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { siteConfig } from '../siteConfig';
 import { MessageCircle } from 'lucide-react'; // 引入圖示
+import DownloadModal from './DownloadModal';
 
 const Hero: React.FC = () => {
   // 使用 Ref 來控制影片元素
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
   useEffect(() => {
     // 🔥 關鍵修改：將影片播放速度調慢至 0.6 倍
@@ -75,7 +77,7 @@ const Hero: React.FC = () => {
           {/* 1. 下載按鈕 */}
           <button
             className="group relative hover:scale-105 transition-all duration-300 transform focus:outline-none bg-transparent"
-            onClick={() => window.open(siteConfig.downloadUrl, '_blank')}
+            onClick={() => setIsDownloadModalOpen(true)}
           >
             <div className="absolute inset-4 bg-[#fccd4d] opacity-0 group-hover:opacity-30 blur-xl rounded-full transition-opacity duration-500 -z-10 animate-pulse"></div>
             <img
@@ -116,6 +118,11 @@ const Hero: React.FC = () => {
 
         </div>
       </div>
+
+      <DownloadModal 
+        isOpen={isDownloadModalOpen} 
+        onClose={() => setIsDownloadModalOpen(false)} 
+      />
     </div>
   );
 };
