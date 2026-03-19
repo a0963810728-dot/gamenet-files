@@ -59,11 +59,11 @@ const Sponsorship: React.FC = () => {
 
   // 2. 累積滿額獎勵
   const cumulativeRewards = [
-    { amount: '1 萬', potion: 1000, box: 5, bonus: 10 },
-    { amount: '2 萬', potion: 2000, box: 10, bonus: 20 },
-    { amount: '3 萬', potion: 3000, box: 15, bonus: 30 },
-    { amount: '4 萬', potion: 4000, box: 20, bonus: 40 },
-    { amount: '5 萬', potion: 5000, box: 25, bonus: 50 },
+    { amount: '1 萬', potion: 1000, box: 5, bonus: 100 },
+    { amount: '2 萬', potion: 2000, box: 10, bonus: 200 },
+    { amount: '3 萬', potion: 3000, box: 15, bonus: 300 },
+    { amount: '4 萬', potion: 4000, box: 20, bonus: 400 },
+    { amount: '5 萬', potion: 5000, box: 25, bonus: 500 },
   ];
 
   // 3. 時間補充包
