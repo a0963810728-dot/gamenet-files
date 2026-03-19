@@ -27,7 +27,7 @@ const Sponsorship: React.FC = () => {
   const mainPlans = [
     {
       price: 1000,
-      diamonds: 10000,
+      diamonds: 100000,
       highlight: false,
       gifts: [
         '天幣 100 萬',
@@ -37,7 +37,7 @@ const Sponsorship: React.FC = () => {
     },
     {
       price: 3000,
-      diamonds: 30000,
+      diamonds: 300000,
       highlight: true, // 標記為推薦
       gifts: [
         '天幣 600 萬',
@@ -47,7 +47,7 @@ const Sponsorship: React.FC = () => {
     },
     {
       price: 5000,
-      diamonds: 50000,
+      diamonds: 500000,
       highlight: false,
       gifts: [
         '天幣 1500 萬',
