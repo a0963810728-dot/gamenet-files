@@ -55,6 +55,7 @@ function App() {
       <Helmet>
         <title>大道 M 天堂 - 2026 年度大作</title>
         <meta name="description" content="大道 M 天堂，重返榮耀，經典再現。體驗 2026 最強私服設定，黑金質感，極致體驗。" />
+        <link rel="canonical" href={`https://playdaodao.com${location.pathname}`} />
       </Helmet>
 
       {/* --- 網站頂部導覽列 (固定顯示) --- */}

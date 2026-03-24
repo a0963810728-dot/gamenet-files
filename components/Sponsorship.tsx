@@ -23,48 +23,59 @@ const Sponsorship: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // 1. 主要贊助方案
   const mainPlans = [
     {
       price: 1000,
-      diamonds: 100000,
+      diamonds: 20000,
       highlight: false,
+      image: '/1000確定版本.png',
       gifts: [
-        '天幣 100 萬',
+        '20倍藍鑽',
         '+6 武官/神官裝備 (自選一套)',
         '+6 稀有武器 (自選一把)',
+        '龍之鑽石禮盒*2 (經驗加倍)',
+        '終極治癒藥水(刻印)*2000',
+        '傳說變身自選箱'
       ]
     },
     {
       price: 3000,
-      diamonds: 300000,
+      diamonds: 150000,
       highlight: true, // 標記為推薦
+      image: '/3000確定版本.png',
       gifts: [
-        '天幣 600 萬',
+        '50倍藍鑽',
         '+7 武官/神官裝備 (自選一套)',
         '+7 稀有武器 (自選一把)',
+        '龍之鑽石禮盒*5 (經驗加倍)',
+        '終極治癒藥水(刻印)*5000',
+        '傳說變身自選箱',
+        '傳說娃娃自選箱',
+        '萬能藥*5',
+        '史奈普+8自選'
       ]
     },
     {
       price: 5000,
       diamonds: 500000,
       highlight: false,
+      image: '/5000確定版本.png',
       gifts: [
-        '天幣 1500 萬',
+        '100倍藍鑽',
         '+8 武官/神官裝備 (自選一套)',
         '+8 稀有武器 (自選一把)',
+        '龍之鑽石禮盒*10 (經驗加倍)',
+        '終極治癒藥水(刻印)*10000',
+        '傳說自選箱 (變身+娃娃)',
+        '萬能藥*15',
+        '+9 英雄武器自選箱',
+        '英雄技能自選箱',
+        '各式大課長頂級防具/飾品自選'
       ]
     },
   ];
 
-  // 2. 累積滿額獎勵
-  const cumulativeRewards = [
-    { amount: '1 萬', potion: 1000, box: 5, bonus: 100 },
-    { amount: '2 萬', potion: 2000, box: 10, bonus: 200 },
-    { amount: '3 萬', potion: 3000, box: 15, bonus: 300 },
-    { amount: '4 萬', potion: 4000, box: 20, bonus: 400 },
-    { amount: '5 萬', potion: 5000, box: 25, bonus: 500 },
-  ];
+
 
   // 3. 時間補充包
   const timePacks = [
@@ -170,9 +181,14 @@ const Sponsorship: React.FC = () => {
                   </div>
                 )}
                 
-                <div className="text-center border-b border-white/10 pb-6 mb-6">
+                <div className="text-center border-b border-white/10 pb-6 mb-4">
                   <div className="text-5xl font-black text-white mb-2">${plan.price}</div>
                   <div className="text-xl text-[#fccd4d] font-bold">獲得 {plan.diamonds.toLocaleString()} 藍鑽</div>
+                </div>
+
+                {/* 方案圖片 */}
+                <div className="mb-4 rounded-lg overflow-hidden border border-white/10 flex justify-center bg-black/50">
+                  <img src={plan.image} alt={`Plan ${plan.price}`} className="w-full h-auto object-contain" />
                 </div>
 
                 <div className="flex-grow">
@@ -202,35 +218,7 @@ const Sponsorship: React.FC = () => {
         </div>
       </div>
 
-      {/* 累積獎勵 */}
-      <div 
-        className="max-w-5xl mx-auto mb-24"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
-        <h2 className="text-3xl font-bold text-white mb-10 flex items-center gap-3">
-          <Gift className="text-red-500" /> 累積滿額回饋
-        </h2>
-        <div className="bg-[#111] rounded-2xl border border-white/10 overflow-hidden">
-          <div className="grid grid-cols-4 bg-white/5 p-4 text-slate-400 font-bold text-sm md:text-base border-b border-white/10">
-            <div>累積金額</div>
-            <div>終極治癒藥水(刻印)</div>
-            <div>龍之鑽石禮盒</div>
-            <div className="text-red-400">紅利點數</div>
-          </div>
-          {cumulativeRewards.map((reward, index) => (
-            <div key={index} className="grid grid-cols-4 p-5 text-white border-b border-white/5 hover:bg-white/5 transition-colors items-center">
-              <div className="font-bold text-[#fccd4d] text-lg">{reward.amount}</div>
-              <div className="text-slate-300">x {reward.potion}</div>
-              <div className="text-slate-300">x {reward.box}</div>
-              <div className="text-red-400 font-bold text-lg">{reward.bonus} 點</div>
-            </div>
-          ))}
-          <div className="p-4 text-center text-sm text-red-500 bg-red-900/10">
-            ★ 紅利商城販售內容不定期更新 ★
-          </div>
-        </div>
-      </div>
+
 
       {/* 補充包 */}
       <div 

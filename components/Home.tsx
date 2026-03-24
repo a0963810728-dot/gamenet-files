@@ -2,6 +2,7 @@ import React from 'react';
 // 引入首頁需要的內容元件
 import Hero from './Hero';
 import News from './News';
+import HomeSponsorship from './HomeSponsorship';
 import Features from './Features'; // 🔥 步驟 1: 取消註解，重新引入
 // import Collection from './Collection';
 import HomeEntryCards from './HomeEntryCards';
@@ -17,6 +18,9 @@ const Home: React.FC = () => {
       
       {/* 主視覺區塊 */}
       <Hero />
+      
+      {/* 贊助方案：最醒目的地方 (Hero 之下) */}
+      <HomeSponsorship />
       
       {/* 三大圖鑑入口 (變身/娃娃/聖物) */}
       <HomeEntryCards />

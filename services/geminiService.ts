@@ -1,9 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
-import { siteConfig } from "../siteConfig.ts";
+import { siteConfig } from "../siteConfig";
 
 export const getGeminiResponse = async (userMessage: string, history: any[]) => {
   // 安全取得 API KEY
-  const apiKey = (typeof process !== 'undefined' && process.env.API_KEY) || '';
+  const apiKey = (import.meta as any).env?.VITE_API_KEY || (typeof window !== 'undefined' ? (window as any).process?.env?.API_KEY : '');
   
   if (!apiKey) {
     return "英雄，我感應不到星辰之鑰（API Key），請聯絡大賢者（管理員）設定環境變數。";
