@@ -38,11 +38,16 @@ const Footer: React.FC = () => {
               快速連結
             </h4>
             <ul className="space-y-3">
-              {['最新消息', '遊戲特色', '職業介紹', '下載專區'].map((item, idx) => (
+              {[
+                { name: '最新消息', href: '/#news' },
+                { name: '遊戲特色', href: '/#game-features' },
+                { name: '遊戲攻略', href: '/guide' },
+                { name: '贊助支持', href: '/sponsorship' },
+              ].map((item, idx) => (
                 <li key={idx}>
-                  <a href="#" className="text-slate-400 hover:text-[#fccd4d] transition-colors text-sm tracking-wider flex items-center group">
+                  <a href={item.href} className="text-slate-400 hover:text-[#fccd4d] transition-colors text-sm tracking-wider flex items-center group">
                     <span className="w-1 h-1 bg-slate-600 rounded-full mr-3 group-hover:bg-[#fccd4d] transition-colors"></span>
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}

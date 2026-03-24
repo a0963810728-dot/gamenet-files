@@ -21,8 +21,6 @@ const Home: React.FC = () => {
       
       {/* 贊助方案：最醒目的地方 (Hero 之下) */}
       <HomeSponsorship />
-      
-      {/* 三大圖鑑入口 (變身/娃娃/聖物) */}
       <HomeEntryCards />
       
       {/* 🔥 步驟 2: 將新的特色系統區塊放在這裡 */}
