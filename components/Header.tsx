@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Newspaper, Gamepad2, BookOpen, Crown, Download } from 'lucide-react';
+import { Menu, X, Newspaper, Gamepad2, BookOpen, Crown, Download, Trophy } from 'lucide-react';
 // 🔥 1. 引入剛剛做好的彈窗組件
 import DownloadModal from './DownloadModal';
 
@@ -18,6 +18,7 @@ const Header: React.FC = () => {
     { name: '最新消息', link: '/#news', icon: Newspaper },
     { name: '遊戲特色', link: '/#game-features', icon: Gamepad2 },
     { name: '遊戲攻略', link: '/guide', icon: BookOpen },
+    { name: '名人堂', link: '/hall-of-fame', icon: Trophy },
     { name: '贊助支持', link: '/sponsorship', icon: Crown }, 
   ];
 
