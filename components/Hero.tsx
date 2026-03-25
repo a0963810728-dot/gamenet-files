@@ -5,7 +5,16 @@ import { MessageCircle } from 'lucide-react'; // 引入圖示
 import DownloadModal from './DownloadModal';
 
 const Hero: React.FC = () => {
+  // 使用 Ref 來控制影片元素
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+
+  useEffect(() => {
+    // 🔥 關鍵修改：將影片播放速度調慢至 0.6 倍
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.6;
+    }
+  }, []);
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-end overflow-hidden bg-black pb-10 md:pb-16">
@@ -15,7 +24,18 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/50 z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/90 z-10" />
 
-        <img src="/hero-bg-v2.png" alt="Background" className="w-full h-full object-cover" />
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/hero-bg-v2.png"
+          className="w-full h-full object-cover"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+          <img src="/hero-bg-v2.png" alt="Background" className="w-full h-full object-cover" />
+        </video>
       </div>
 
       {/* --- 主內容區 --- */}
