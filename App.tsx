@@ -15,7 +15,6 @@ import GameGuide from './components/GameGuide';
 import FullCollectionPage from './components/FullCollectionPage';
 import SystemPage from './components/SystemPage'; // 特色系統 (動態路由)
 import Sponsorship from './components/Sponsorship'; // 贊助頁面
-import HallOfFame from './components/HallOfFame'; // 名人堂
 
 // 3. 功能型懸浮組件
 import AIConsultant from './components/AIConsultant'; // AI 客服
@@ -82,16 +81,6 @@ function App() {
                 <title>贊助方案 - 大道 M</title>
               </Helmet>
               <Sponsorship />
-            </>
-          } />
-
-          {/* 名人堂頁面 */}
-          <Route path="/hall-of-fame" element={
-            <>
-              <Helmet>
-                <title>名人堂 - 大道 M 天堂</title>
-              </Helmet>
-              <HallOfFame />
             </>
           } />
 
