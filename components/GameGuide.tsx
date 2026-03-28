@@ -6,9 +6,9 @@ import {
   Map,      // 地圖資訊
   Search,   // 掉落查詢 & 搜尋圖示
   Zap,      // 技能介紹
-  ExternalLink,
   ChevronRight
 } from 'lucide-react';
+import { DROPLIST_DATA, type DropItem } from '../src/data/droplistData';
 
 // =========================================================================
 //  1. 靜態資料定義 (完整資料庫)
@@ -299,12 +299,30 @@ const GameGuide: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('新手入門');
   const [skillSearch, setSkillSearch] = useState('');
   const [skillJobFilter, setSkillJobFilter] = useState('全部');
+  const [dropSearch, setDropSearch] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const DROP_SEARCH_URL = "https://cartest-ih32.onrender.com";
+  // === 掉落查詢：本地過濾 ===
+  const filteredDrops = useMemo(() => {
+    const q = dropSearch.trim().toLowerCase();
+    if (!q || q.length < 1) return [];
+    const results = DROPLIST_DATA.filter(d =>
+      d.mobName.toLowerCase().includes(q) || d.itemName.toLowerCase().includes(q)
+    );
+    return results.slice(0, 100);
+  }, [dropSearch]);
+
+  // 將 chance 數值轉為可讀機率字串
+  const formatChance = (chance: number): string => {
+    if (chance >= 1000000) return '100%';
+    if (chance === 0) return '特殊';
+    const pct = chance / 10000;
+    if (pct >= 1) return `${pct.toFixed(1)}%`;
+    return `${(chance / 100).toFixed(2)}‱`;
+  };
 
   const filteredSkills = useMemo(() => {
     return SKILL_DATABASE.filter(skill => {
@@ -321,6 +339,7 @@ const GameGuide: React.FC = () => {
     { id: '新手入門', icon: BookOpen, label: '新手入門' },
     { id: '職業介紹', icon: Swords, label: '職業介紹' },
     { id: '技能介紹', icon: Zap, label: '技能介紹' },
+    { id: '掉落查詢', icon: Search, label: '掉落查詢' },
     { id: '地圖資訊', icon: Map, label: '地圖資訊' },
   ];
 
@@ -467,19 +486,7 @@ const GameGuide: React.FC = () => {
                 );
               })}
 
-              {/* 獨立的掉落查詢按鈕 (External Link) */}
-              <a
-                href={DROP_SEARCH_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between w-full p-4 rounded-xl border border-white/5 bg-white/5 text-slate-400 hover:bg-white/10 hover:border-green-500/30 hover:text-green-400 transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <Search size={20} className="text-slate-500 group-hover:text-green-400 transition-colors" />
-                  <span className="font-bold tracking-wide">掉落查詢</span>
-                </div>
-                <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" />
-              </a>
+
             </div>
           </div>
 
@@ -594,6 +601,101 @@ const GameGuide: React.FC = () => {
                   <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
                     {filteredSkills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
                   </div>
+                </div>
+              )}
+
+              {/* 4. 掉落查詢區塊 */}
+              {activeCategory === '掉落查詢' && (
+                <div className="animate-fade-in-up">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Search className="text-[#fccd4d]" size={28} />
+                    <h2 className="text-2xl font-bold text-white">掉落物品查詢</h2>
+                    <span className="text-xs bg-green-600/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded">本地資料庫 · {DROPLIST_DATA.length.toLocaleString()} 筆</span>
+                  </div>
+
+                  {/* 搜尋框 */}
+                  <div className="bg-black/30 p-4 rounded-xl border border-white/10 mb-6">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                      <input
+                        type="text"
+                        placeholder="搜尋怪物名稱 或 物品名稱..."
+                        className="w-full bg-[#050505] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-slate-200 focus:outline-none focus:border-[#fccd4d] transition-colors"
+                        value={dropSearch}
+                        onChange={(e) => setDropSearch(e.target.value)}
+                      />
+                    </div>
+                    {dropSearch.trim().length > 0 && (
+                      <p className="text-xs text-slate-500 mt-2">
+                        找到 <span className="text-[#fccd4d] font-bold">{filteredDrops.length}</span> 筆結果
+                        {filteredDrops.length >= 100 && <span className="text-slate-600">（僅顯示前 100 筆，請輸入更精確的關鍵字）</span>}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* 預設提示 */}
+                  {dropSearch.trim().length === 0 && (
+                    <div className="text-center py-20">
+                      <Search size={48} className="mx-auto text-slate-700 mb-4" />
+                      <p className="text-slate-500">請輸入<span className="text-[#fccd4d]">怪物名稱</span>或<span className="text-[#fccd4d]">物品名稱</span>開始查詢</p>
+                      <p className="text-slate-600 text-xs mt-2">例如：梅杜莎、金幣、英雄技能卡</p>
+                    </div>
+                  )}
+
+                  {/* 結果列表 */}
+                  {dropSearch.trim().length > 0 && filteredDrops.length > 0 && (
+                    <div className="space-y-2">
+                      {/* 表頭 */}
+                      <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 text-xs text-slate-600 font-bold tracking-wider border-b border-white/5">
+                        <div className="col-span-4">怪物名稱</div>
+                        <div className="col-span-5">掉落物品</div>
+                        <div className="col-span-3 text-right">掉落機率</div>
+                      </div>
+                      {filteredDrops.map((drop, idx) => {
+                        const chanceVal = drop.chance / 10000;
+                        const isRare = drop.chance > 0 && drop.chance <= 100;
+                        const isSpecial = drop.chance === 0;
+                        return (
+                          <div key={`${drop.mobId}-${drop.itemId}-${idx}`}
+                            className={`group grid grid-cols-1 md:grid-cols-12 gap-1 md:gap-2 px-4 py-3 rounded-lg border transition-all duration-200 ${
+                              isSpecial ? 'bg-purple-500/5 border-purple-500/20 hover:border-purple-500/40' :
+                              isRare ? 'bg-yellow-500/5 border-yellow-500/20 hover:border-yellow-500/40' :
+                              'bg-white/[0.02] border-white/5 hover:border-white/20 hover:bg-white/[0.05]'
+                            }`}
+                          >
+                            <div className="md:col-span-4 font-bold text-slate-200 text-sm flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span>
+                              {drop.mobName}
+                            </div>
+                            <div className={`md:col-span-5 text-sm flex items-center gap-2 ${
+                              isSpecial ? 'text-purple-300' : isRare ? 'text-yellow-300' : 'text-slate-300'
+                            }`}>
+                              {drop.itemName}
+                              {isRare && <span className="text-[9px] bg-yellow-500/20 text-yellow-400 px-1 rounded">稀有</span>}
+                              {isSpecial && <span className="text-[9px] bg-purple-500/20 text-purple-400 px-1 rounded">特殊</span>}
+                            </div>
+                            <div className={`md:col-span-3 text-right text-sm font-mono font-bold ${
+                              isSpecial ? 'text-purple-400' :
+                              chanceVal >= 50 ? 'text-green-400' :
+                              chanceVal >= 10 ? 'text-blue-400' :
+                              chanceVal >= 1 ? 'text-yellow-400' :
+                              'text-red-400'
+                            }`}>
+                              {formatChance(drop.chance)}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* 無結果 */}
+                  {dropSearch.trim().length > 0 && filteredDrops.length === 0 && (
+                    <div className="text-center py-16">
+                      <p className="text-slate-500">找不到符合「<span className="text-[#fccd4d]">{dropSearch}</span>」的掉落資料</p>
+                      <p className="text-slate-600 text-xs mt-1">試試其他關鍵字吧！</p>
+                    </div>
+                  )}
                 </div>
               )}
 
