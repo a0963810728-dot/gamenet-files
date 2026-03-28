@@ -3,6 +3,7 @@ import React from 'react';
 import Hero from './Hero';
 import News from './News';
 import HomeSponsorship from './HomeSponsorship';
+import HomeDropSearch from './HomeDropSearch';
 import Features from './Features'; // 🔥 步驟 1: 取消註解，重新引入
 // import Collection from './Collection';
 import HomeEntryCards from './HomeEntryCards';
@@ -21,6 +22,10 @@ const Home: React.FC = () => {
       
       {/* 贊助方案：最醒目的地方 (Hero 之下) */}
       <HomeSponsorship />
+
+      {/* 掉落查詢：首頁快速查詢 */}
+      <HomeDropSearch />
+
       <HomeEntryCards />
       
       {/* 🔥 步驟 2: 將新的特色系統區塊放在這裡 */}
