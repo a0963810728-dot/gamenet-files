@@ -82,6 +82,23 @@ const HomeSponsorship: React.FC = () => {
           <p className="text-slate-400 text-lg">最強裝備隨心搭配，快速起步稱霸全服</p>
         </div>
 
+        {/* 活動慶典 Banner */}
+        <div className="mb-16" data-aos="fade-up" data-aos-delay="100">
+          <a
+            href={officialLine.link}
+            target="_blank"
+            rel="noreferrer"
+            className="block max-w-lg mx-auto rounded-2xl overflow-hidden border-2 border-[#fccd4d]/40 shadow-[0_0_40px_rgba(252,205,77,0.2)] relative group transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div className="absolute inset-0 bg-[#fccd4d]/0 group-hover:bg-[#fccd4d]/10 transition-colors duration-300 z-10 pointer-events-none"></div>
+            <img 
+              src="/festival-pool.jpg" 
+              alt="傳說&英雄池慶典" 
+              className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </a>
+        </div>
+
         {/* 三欄卡片 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {plans.map((plan, index) => (
