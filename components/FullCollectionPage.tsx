@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MapDropSection from './MapDropSection';
 
 // === 1. 定義資料結構 ===
 interface CollectionItem {
@@ -220,7 +221,7 @@ const getRankStyles = (rank: string) => {
 
 const FullCollectionPage: React.FC = () => {
   // 設定初始狀態
-  const [activeTab, setActiveTab] = useState<'trans' | 'doll' | 'relic'>('trans'); 
+  const [activeTab, setActiveTab] = useState<'trans' | 'doll' | 'relic' | 'mapDrop'>('trans'); 
 
   // 🔥 新增：監聽網址參數，實現自動跳轉
   React.useEffect(() => {
@@ -228,14 +229,14 @@ const FullCollectionPage: React.FC = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const tab = searchParams.get('tab');
     
-    // 如果網址有指定 trans / doll / relic，就切換過去
-    if (tab === 'trans' || tab === 'doll' || tab === 'relic') {
-      setActiveTab(tab);
+    // 如果網址有指定 trans / doll / relic / mapDrop，就切換過去
+    if (tab === 'trans' || tab === 'doll' || tab === 'relic' || tab === 'mapDrop') {
+      setActiveTab(tab as 'trans' | 'doll' | 'relic' | 'mapDrop');
     }
   }, []);
 
   // 切換分頁的函式 (點擊按鈕時同時修改網址，讓上一頁功能正常)
-  const handleTabChange = (tab: 'trans' | 'doll' | 'relic') => {
+  const handleTabChange = (tab: 'trans' | 'doll' | 'relic' | 'mapDrop') => {
     setActiveTab(tab);
     // 修改網址但不刷新頁面 (例如變成 /collection?tab=relic)
     const newUrl = `${window.location.pathname}?tab=${tab}`;
@@ -289,10 +290,10 @@ const FullCollectionPage: React.FC = () => {
       
       <div className="text-center mb-12 px-4">
         <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest mb-4 uppercase">
-          COLLECTION <span className="text-[#fccd4d]">圖鑑</span>
+          COLLECTION <span className="text-[#fccd4d]">圖鑑 & 掉落</span>
         </h1>
         <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">
-          紀錄著亞丁大陸傳說中的強大力量，唯有真正的強者才能駕馭。
+          紀錄著亞丁大陸傳說中的強大力量與各區域地圖寶物掉落資訊。
         </p>
       </div>
 
@@ -320,22 +321,34 @@ const FullCollectionPage: React.FC = () => {
           魔法娃娃圖鑑
         </button>
 
-     <button
-  onClick={() => handleTabChange('relic')}
-  className={`px-6 md:px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 border ${
-    activeTab === 'relic'
-      // 🔥 修改處：將原本的藍色代碼替換成金色代碼 🔥
-      ? 'bg-[#fccd4d] text-black border-[#fccd4d] shadow-[0_0_20px_rgba(252,205,77,0.4)]'
-      : 'bg-transparent text-slate-500 border-slate-700 hover:border-slate-400 hover:text-white'
-  }`}
->
-  魔法聖物圖鑑
-</button>
+        <button
+          onClick={() => handleTabChange('relic')}
+          className={`px-6 md:px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 border ${
+            activeTab === 'relic'
+              ? 'bg-[#fccd4d] text-black border-[#fccd4d] shadow-[0_0_20px_rgba(252,205,77,0.4)]'
+              : 'bg-transparent text-slate-500 border-slate-700 hover:border-slate-400 hover:text-white'
+          }`}
+        >
+          魔法聖物圖鑑
+        </button>
+
+        <button
+          onClick={() => handleTabChange('mapDrop')}
+          className={`px-6 md:px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 border ${
+            activeTab === 'mapDrop'
+              ? 'bg-[#fccd4d] text-black border-[#fccd4d] shadow-[0_0_20px_rgba(252,205,77,0.4)]'
+              : 'bg-transparent text-slate-500 border-slate-700 hover:border-slate-400 hover:text-white'
+          }`}
+        >
+          🗺️ 地圖掉落表
+        </button>
       </div>
 
       <div className="container mx-auto px-6">
-        {/* 資料展示區 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {activeTab === 'mapDrop' ? (
+          <MapDropSection />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {currentData.length > 0 ? (
             currentData.map((item) => {
               const style = getRankStyles(item.rank);
@@ -407,6 +420,7 @@ const FullCollectionPage: React.FC = () => {
             </div>
           )}
         </div>
+      )}
 
         <div className="text-center mt-16 opacity-50">
           <p className="text-slate-600 text-sm">

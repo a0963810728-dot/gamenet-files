@@ -125,7 +125,10 @@ const HomeDropSearch: React.FC = () => {
         )}
 
         {/* 底部連結 */}
-        <div className="text-center mt-8">
+        <div className="flex items-center justify-center gap-4 mt-8 flex-wrap">
+          <a href="/collection?tab=mapDrop" className="inline-flex items-center gap-2 text-sm text-[#fccd4d] hover:text-white transition-colors border border-[#fccd4d]/40 hover:border-[#fccd4d] bg-[#fccd4d]/10 px-6 py-2 rounded-full font-bold">
+            🗺️ 查看全服地圖掉落總表 →
+          </a>
           <a href="/guide" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-green-400 transition-colors border border-white/10 hover:border-green-500/30 px-6 py-2 rounded-full">
             前往完整遊戲攻略 →
           </a>
