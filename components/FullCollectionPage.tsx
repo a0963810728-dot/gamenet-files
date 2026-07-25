@@ -340,7 +340,7 @@ const FullCollectionPage: React.FC = () => {
               : 'bg-transparent text-slate-500 border-slate-700 hover:border-slate-400 hover:text-white'
           }`}
         >
-          🗺️ 地圖掉落表
+          🗺️ 掉落總表 (怪物 & 地圖)
         </button>
       </div>
 
