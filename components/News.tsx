@@ -1,15 +1,110 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { X } from 'lucide-react';
+
+interface NewsItem {
+  id: number;
+  category: string;
+  date: string;
+  title: string;
+  desc: string;
+  content?: string;
+  isHot?: boolean;
+}
 
 const News: React.FC = () => {
-  // 🔧 老爹，這裡是公告控制中心！
-  // 您只要修改下面這個 newsItems 列表，網頁上的公告就會變。
-  const newsItems = [
+  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
+
+  // 🔧 公告列表
+  const newsItems: NewsItem[] = [
     {
       id: 1,
+      category: '更新',
+      date: '07/25',
+      title: '【7/25更新公告】開放傲慢之塔頂樓 & 祝福能力與過安定強化能力調整',
+      desc: '開放傲慢之塔頂樓技能書掉落區域、祝福能力調整、開放更高強化上限、武器與防具過安定能力調整。',
+      content: `● 開放傲慢之塔頂樓
+傲慢之塔頂樓正式開放，主要為技能書掉落區域。
+
+● 祝福能力調整
+武器：傷害 +3 → 傷害 +15
+防具：防禦 +3 → 防禦 +6
+飾品：減傷 +3 → 減傷 +5
+
+● 開放強化上限
+武器、防具及飾品開放更高強化上限。
+
+● 武器過安定強化能力調整
+過安定 +4：傷害 +8 → 傷害 +10
+附加效果：1% 機率觸發 1.5 倍爆擊
+
+過安定 +5：傷害 +10 → 傷害 +20
+附加效果：2% 機率觸發 1.5 倍爆擊
+
+過安定 +6：傷害 +30 → 傷害 +40
+附加效果：3% 機率觸發 1.5 倍爆擊
+
+● 防具過安定強化能力
+過安定 +3：減傷 +3
+過安定 +4：減傷 +6
+過安定 +5：減傷 +9
+過安定 +6：減傷 +12
+過安定 +7：減傷 +15`,
+      isHot: true,
+    },
+    {
+      id: 2,
+      category: '活動',
+      date: '02/11',
+      title: '🔥【新春狂歡】金馬迎春！BOSS 暴走大放送！', 
+      desc: '全服 BOSS 100% 掉落「新春紅包」！打死必噴！內含傳說武器製作秘笈、神奇聖物箱、英雄技能自選箱等稀有寶物。', 
+      isHot: true,
+    },
+    {
+      id: 3,
+      category: '重磅',
+      date: '02/11',
+      title: '💰【限時加碼】贊助獎勵 🔥 雙倍送 🔥', 
+      desc: '即刻起至 2/20 維修前，贊助回饋全面 x雙倍！(平日 1000 點 ➔ 活動期間 2000 點！紅利同步雙倍送！)',
+      isHot: true,
+    },
+    {
+      id: 4,
+      category: '商城',
+      date: '02/11',
+      title: '【商城新品】戰力衝刺包 & 全民福利同步上架',
+      desc: '全民福利(天幣)：等級 72 每日限購 10 個 / 戰力衝刺(鑽石)：特價 99 藍鑽 (購買無上限)。',
+      isHot: false,
+    },
+    {
+      id: 5,
+      category: '活動',
+      date: '02/11',
+      title: '【祝福大禮包】販售',
+      desc: '內有祝福聖水額外贈送守護石',
+      isHot: false,
+    },
+    {
+      id: 6,
       category: '活動',
       date: '01/31',
       title: '【全民推廣計畫】每日完成推廣可領取3000藍鑽 !', 
       desc: '活動期間內，將「指定內容」發布到任一社群平台 擇1平台（FB / IG / Threads）。',
+      isHot: false,
+    },
+    {
+      id: 7,
+      category: '重磅',
+      date: '01/30',
+      title: '【王者降臨】1/30 晚上 20:00 正式火爆開服！',
+      desc: '全台最穩機房，誓言打造最後一個天堂。創角直升50等 即送新手專屬禮包！',
+      isHot: false,
+    },
+    {
+      id: 8,
+      category: '公告',
+      date: '01/30',
+      title: '【重要】伺服器線路優化與防護升級說明',
+      desc: '為提供穩定的遊戲環境，我們已加裝高防禦清洗線路，杜絕任何攻擊，請玩家安心遊玩。',
       isHot: false,
     },
   ];
@@ -29,11 +124,6 @@ const News: React.FC = () => {
             </h2>
             <p className="text-slate-500 mt-2 text-sm tracking-widest">掌握亞丁大陸的第一手消息</p>
           </div>
-          {/* 電腦版查看更多 */}
-          <a href="#" className="hidden md:flex items-center gap-2 text-[#fccd4d] hover:text-white transition-colors text-sm font-bold tracking-widest group">
-            查看更多 
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
         </div>
 
         {/* 列表區塊 */}
@@ -41,6 +131,7 @@ const News: React.FC = () => {
           {newsItems.map((item) => (
             <div 
               key={item.id} 
+              onClick={() => setSelectedNews(item)}
               className="group relative bg-white/5 hover:bg-white/10 border border-white/5 hover:border-[#b38728]/50 rounded-lg p-5 transition-all duration-300 cursor-pointer overflow-hidden"
             >
               {/* 懸停光條特效 */}
@@ -52,6 +143,7 @@ const News: React.FC = () => {
                 <div className="flex items-center gap-4 min-w-[140px]">
                   <span className={`px-3 py-1 rounded text-xs font-bold tracking-widest border ${
                     item.category === '重磅' ? 'border-red-500/50 bg-red-500/10 text-red-400' :
+                    item.category === '更新' ? 'border-amber-500/50 bg-amber-500/10 text-amber-400' :
                     item.category === '活動' ? 'border-blue-500/50 bg-blue-500/10 text-blue-400' :
                     item.category === '商城' ? 'border-yellow-500/50 bg-yellow-500/10 text-yellow-400' :
                     'border-slate-500/50 bg-slate-500/10 text-slate-400'
@@ -82,12 +174,52 @@ const News: React.FC = () => {
           ))}
         </div>
 
-        {/* 手機版查看更多按鈕 */}
-        <div className="mt-8 text-center md:hidden">
-            <a href="#" className="inline-block border border-[#b38728] text-[#fccd4d] px-8 py-2 rounded text-sm font-bold">查看更多消息</a>
-        </div>
-
       </div>
+
+      {/* 公告詳情彈窗 */}
+      {selectedNews && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setSelectedNews(null)}
+          ></div>
+          <div 
+            className="relative w-full max-w-2xl bg-[#111] border border-[#fccd4d]/40 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.9)] overflow-hidden p-6 md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-6">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="px-3 py-1 rounded text-xs font-bold tracking-widest border border-amber-500/50 bg-amber-500/10 text-amber-400">
+                    {selectedNews.category}
+                  </span>
+                  <span className="text-slate-400 font-mono text-sm">{selectedNews.date}</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug">
+                  {selectedNews.title}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setSelectedNews(null)}
+                className="text-slate-400 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-line max-h-[60vh] overflow-y-auto pr-2 space-y-3">
+              {selectedNews.content || selectedNews.desc}
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/10 text-right">
+              <button
+                onClick={() => setSelectedNews(null)}
+                className="px-6 py-2 bg-[#fccd4d] text-black font-bold rounded hover:bg-[#ffe082] transition-colors text-sm"
+              >
+                關閉公告
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

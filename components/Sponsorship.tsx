@@ -1,6 +1,6 @@
 // src/components/Sponsorship.tsx
 import React, { useState, useEffect } from 'react';
-import { Check, Copy, MessageCircle, ShieldCheck, Gem, Gift, Clock, Smartphone } from 'lucide-react';
+import { Check, Copy, MessageCircle, ShieldCheck, Gem, Gift, Clock, Smartphone, Zap, Shield } from 'lucide-react';
 
 const Sponsorship: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -86,6 +86,17 @@ const Sponsorship: React.FC = () => {
     { name: '拋棄之地', price: 150, count: 30, color: 'text-teal-400', border: 'border-teal-400/30' },
     { name: '精靈墓穴', price: 150, count: 30, color: 'text-indigo-400', border: 'border-indigo-400/30' },
     { name: '傲慢之塔', price: 150, count: 30, color: 'text-purple-400', border: 'border-purple-400/30' },
+    { name: '遺忘之島', price: 150, count: 30, color: 'text-rose-400', border: 'border-rose-400/30' },
+  ];
+
+  // 4. 武防具安定強化
+  const stabilizePacks = [
+    { range: '6 → 7', price: 1000, color: 'text-green-400', border: 'border-green-400/30', glow: 'shadow-green-400/10' },
+    { range: '7 → 8', price: 1000, color: 'text-blue-400', border: 'border-blue-400/30', glow: 'shadow-blue-400/10' },
+    { range: '8 → 9', price: 1000, color: 'text-purple-400', border: 'border-purple-400/30', glow: 'shadow-purple-400/10' },
+    { range: '9 → 10', price: 1000, color: 'text-yellow-400', border: 'border-yellow-400/30', glow: 'shadow-yellow-400/10' },
+    { range: '10 → 11', price: 1000, color: 'text-orange-400', border: 'border-orange-400/30', glow: 'shadow-orange-400/10' },
+    { range: '11 → 12', price: 1000, color: 'text-red-400', border: 'border-red-400/30', glow: 'shadow-red-400/10' },
   ];
 
   return (
@@ -223,6 +234,56 @@ const Sponsorship: React.FC = () => {
 
 
 
+      {/* 聖物 / 變身娃娃卡冊資訊圖 */}
+      <div
+        className="max-w-7xl mx-auto mb-24"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h2 className="text-3xl font-bold text-white mb-10 flex items-center gap-3">
+          <Gift className="text-[#fccd4d]" /> 聖物 & 變身娃娃卡冊
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 聖物 */}
+          <div
+            className="bg-[#111] rounded-2xl border border-yellow-400/20 overflow-hidden shadow-[0_0_30px_rgba(252,205,77,0.05)] hover:-translate-y-1 transition-transform duration-300"
+            data-aos="fade-right"
+            data-aos-duration="900"
+          >
+            <div className="px-6 py-4 border-b border-white/10 flex items-center gap-2">
+              <span className="text-yellow-400 text-xl">✦</span>
+              <h3 className="text-white font-bold text-lg tracking-wide">聖物資訊</h3>
+            </div>
+            <div className="p-4 bg-black/30">
+              <img
+                src="/聖物.png"
+                alt="聖物資訊圖"
+                className="w-full h-auto rounded-lg object-contain"
+              />
+            </div>
+          </div>
+
+          {/* 變身娃娃卡冊 */}
+          <div
+            className="bg-[#111] rounded-2xl border border-purple-400/20 overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.05)] hover:-translate-y-1 transition-transform duration-300"
+            data-aos="fade-left"
+            data-aos-duration="900"
+          >
+            <div className="px-6 py-4 border-b border-white/10 flex items-center gap-2">
+              <span className="text-purple-400 text-xl">✦</span>
+              <h3 className="text-white font-bold text-lg tracking-wide">變身娃娃卡冊</h3>
+            </div>
+            <div className="p-4 bg-black/30">
+              <img
+                src="/變身娃娃卡冊.jpg"
+                alt="變身娃娃卡冊資訊圖"
+                className="w-full h-auto rounded-lg object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 補充包 */}
       <div 
         className="max-w-6xl mx-auto mb-24"
@@ -254,6 +315,98 @@ const Sponsorship: React.FC = () => {
               </a>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* 武防具安定強化 */}
+      <div
+        className="max-w-6xl mx-auto mb-24"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h2 className="text-3xl font-bold text-white mb-4 flex items-center gap-3">
+          <Shield className="text-orange-400" /> 擴增 武防具安定
+        </h2>
+        <p className="text-slate-400 mb-10">安定強化提升裝備等級，確保不爆裝，請聯繫客服洽詢。</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {stabilizePacks.map((pack, index) => (
+            <div
+              key={index}
+              data-aos="zoom-in"
+              data-aos-delay={index * 80}
+              className={`bg-[#111] rounded-xl p-5 border ${pack.border} text-center group hover:bg-[#1a1a1a] transition-colors shadow-lg ${pack.glow}`}
+            >
+              <div className="text-3xl font-black text-white mb-2 tracking-tight">{pack.range}</div>
+              <div className={`text-xs font-bold mb-3 ${pack.color}`}>安定升級</div>
+              <div className="text-2xl font-black text-white mb-1">{pack.price.toLocaleString()} <span className="text-xs font-normal text-slate-500">NT</span></div>
+              <div className="text-[11px] text-slate-500 mb-5">每次服務費</div>
+              <a
+                href={officialLine.link}
+                target="_blank"
+                rel="noreferrer"
+                className="block w-full py-2 bg-white/10 rounded text-xs hover:bg-white/20 transition-colors"
+              >
+                聯繫購買
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 單品購買與特殊升級 */}
+      <div
+        className="max-w-6xl mx-auto mb-24"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h2 className="text-3xl font-bold text-white mb-10 flex items-center gap-3">
+          <Zap className="text-green-400" /> 單品購買與特殊升級
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl">
+          {/* 經驗加倍 500% 藥水 */}
+          <div
+            data-aos="zoom-in"
+            className="bg-[#111] rounded-xl border border-green-400/30 p-8 flex flex-col items-center text-center shadow-lg shadow-green-400/10 hover:bg-[#1a1a1a] transition-colors"
+          >
+            <div className="w-14 h-14 rounded-full bg-green-400/10 flex items-center justify-center mb-4">
+              <Zap className="text-green-400" size={28} />
+            </div>
+            <div className="text-xl font-bold text-white mb-1">經驗加倍 500% 藥水</div>
+            <div className="text-slate-400 text-sm mb-6">單瓶購買，立即提升經驗倍率</div>
+            <div className="text-4xl font-black text-white mb-1">5 <span className="text-base font-normal text-slate-500">NT / 瓶</span></div>
+            <div className="text-xs text-slate-500 mb-8">每瓶 5 NT，數量不限</div>
+            <a
+              href={officialLine.link}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3 bg-green-500/20 border border-green-500/40 rounded text-green-300 font-bold text-sm hover:bg-green-500/30 transition-colors"
+            >
+              聯繫購買
+            </a>
+          </div>
+
+          {/* 祝福升級 */}
+          <div
+            data-aos="zoom-in"
+            data-aos-delay="100"
+            className="bg-[#111] rounded-xl border border-amber-400/30 p-8 flex flex-col items-center text-center shadow-lg shadow-amber-400/10 hover:bg-[#1a1a1a] transition-colors"
+          >
+            <div className="w-14 h-14 rounded-full bg-amber-400/10 flex items-center justify-center mb-4">
+              <ShieldCheck className="text-amber-400" size={28} />
+            </div>
+            <div className="text-xl font-bold text-white mb-1">祝福升級</div>
+            <div className="text-slate-400 text-sm mb-6">武器 / 防具 / 飾品 祝福能力升級</div>
+            <div className="text-4xl font-black text-white mb-1">2,000 <span className="text-base font-normal text-slate-500">NT / 件</span></div>
+            <div className="text-xs text-slate-500 mb-8">單件升級服務，詳情聯繫客服</div>
+            <a
+              href={officialLine.link}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3 bg-amber-500/20 border border-amber-500/40 rounded text-amber-300 font-bold text-sm hover:bg-amber-500/30 transition-colors"
+            >
+              聯繫購買
+            </a>
+          </div>
         </div>
       </div>
 
