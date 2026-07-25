@@ -87,6 +87,7 @@ const Sponsorship: React.FC = () => {
     { name: '精靈墓穴', price: 150, count: 30, color: 'text-indigo-400', border: 'border-indigo-400/30' },
     { name: '傲慢之塔', price: 150, count: 30, color: 'text-purple-400', border: 'border-purple-400/30' },
     { name: '遺忘之島', price: 150, count: 30, color: 'text-rose-400', border: 'border-rose-400/30' },
+    { name: '支配者之塔1F', price: 150, count: 30, color: 'text-amber-400', border: 'border-amber-400/30' },
   ];
 
   // 4. 武防具安定強化
@@ -293,7 +294,7 @@ const Sponsorship: React.FC = () => {
         <h2 className="text-3xl font-bold text-white mb-10 flex items-center gap-3">
           <Clock className="text-blue-400" /> 副本時間補充包
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {timePacks.map((pack, index) => (
             <div 
               key={index} 
